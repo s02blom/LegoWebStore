@@ -4,6 +4,7 @@ services:
   development:
     build: 
       context: .
+      network: host
       dockerfile: Dockerfile
     environment:
       - DATABASE_HOST=${DATABASE_HOST}
