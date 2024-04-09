@@ -1,3 +1,9 @@
+# Description
+This project models the data necessary for runing a manutacturing/ distribution center for lego. 
+
+
+# E/R - Diagrams
+
 # python-sql-devcontainer
 This repository contains a dev container with a MySQL server and python. 
 
