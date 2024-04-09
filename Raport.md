@@ -6,7 +6,10 @@
 
 # Changelog
 
-|Name|Change Description|Date|
-|Sofia Blom | Setup devcontainer for Python and SQL developments | 2024-04-09 |
+| Name| Change Description| Date|
+|:----|:------------------|:----|
+| Sofia Blom | Setup devcontainer for Python and SQL development | 2024-04-09 |
 
 # Other
+
+## Github access
