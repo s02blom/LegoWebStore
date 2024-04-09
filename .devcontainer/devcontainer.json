@@ -1,0 +1,11 @@
+{
+    "name": "devcontainer-example",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "development",
+    "workspaceFolder": "/workspace",
+    "extensions": [
+        "ms-python.python"
+    ],
+    "postCreateCommand": "python3 -m pip install -r requirements.txt",
+    "appPort": [9080]
+}
