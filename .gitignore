@@ -1,2 +1,4 @@
 ﻿.devcontainer/.env
 *.png
+*.html
+*.pdf
