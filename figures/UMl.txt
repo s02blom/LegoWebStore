@@ -1,5 +1,0 @@
-@startuml
-object LegoBrick
-object LegoSet
-
-@enduml

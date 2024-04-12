@@ -1,0 +1,57 @@
+@startuml Lego
+left to right direction
+
+
+entity LegoBrick{
+    ID {PK}
+    --
+    Dim_X
+    Dim_Y
+    Dim_Z
+    Material
+}
+
+entity Storage_location{
+    ID {PK}
+    --
+    Colour
+    Quantity
+    Drawer
+}
+
+entity LegoSet{
+    ID {PK}
+    --
+    Name
+    Price
+}
+
+entity Customer{
+    ID {PK}
+    --
+    CompanyName
+    Country
+}
+
+entity Orders{
+    ID {PK}
+    --
+    CustomerID
+    LegoKit
+    Quantity
+    Shipping_adress
+    Price
+    Date
+}
+
+entity Are_A_Part_Of{
+    Quantity
+}
+
+LegoBrick "0..n" --  Are_A_Part_Of
+Are_A_Part_Of -- "1" LegoSet
+LegoBrick "1" -- "1" Storage_location : Are stored in
+
+Customer "0..n" -- "1" Orders : Creates
+Orders "1..n" -- "1..n" LegoSet : Contains
+@enduml
