@@ -18,7 +18,7 @@ DATABASE_PORT=3306
 Do note however that this is the default port for MySQL Workbench and you might wish to change the port if you plan using that at the same time. 
 
 ## Figures
-All figures are a UML diagrams written using (PlantUML)[https://plantuml.com/]. 
+All figures are a UML diagrams written using [PlantUML](https://plantuml.com/). 
 
 ## License
 
