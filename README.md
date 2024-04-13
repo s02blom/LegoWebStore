@@ -20,6 +20,9 @@ Do note however that this is the default port for MySQL Workbench and you might 
 ## Figures
 All figures are a UML diagrams written using [PlantUML](https://plantuml.com/). 
 
+## Run
+To run the front end (as of now) use `flask --app ./python/Host.py run`
+
 ## License
 
 AUTHORS:
