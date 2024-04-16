@@ -22,6 +22,7 @@ All figures are a UML diagrams written using [PlantUML](https://plantuml.com/).
 
 ## Run
 To run the front end (as of now) use `flask --app ./python/Host.py run`
+When developing use this for live preview `flask --app ./LegoWebStore/app/views.py --debug run`. 
 
 ## License
 
