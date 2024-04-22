@@ -63,7 +63,7 @@ entity ShippingAdress{
 
 entity OrderContent{
     **Order {PK, FK} int**
-    **LegoSetb {PK, FK}    int**
+    **LegoSet {PK, FK}  int**
     --
     Quantity    int
 }
