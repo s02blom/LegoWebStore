@@ -42,6 +42,7 @@ entity Customer{
     --
     CompanyName     varchar[200]
     Country         varchar[2]
+    email           varchar[320]
 }
 
 
