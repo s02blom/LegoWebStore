@@ -9,7 +9,7 @@ This repository contains a dev container with a MySQL server and python. It also
 ### Env-file
 The `.env` file should be located inside [`.devcontainer`](./.devcontainer/). Here is an example of an appripriate `.env` file:
 ```
-DATABASE_HOST=mysql_db
+DATABASE_HOST=127.0.0.1
 DATABASE_USER=ROOT
 DATABASE_PASSWORD=my-password
 DATABASE_DB=my-database
