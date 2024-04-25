@@ -1,13 +1,13 @@
 import os
 import mysql.connector as Kalle
-from mysql.connector import errcode
+from mysql.connector import errorcode
 
 
-connection = Kalle.connect( host = os.environ.get('DATABASE_HOST'),
-                            user = os.environ.get('DATABASE_USER'),
-                            password = os.environ.get('DATABASE_PASSWORD'),
-                            database = os.environ.get('DATABASE_DB'),
-                            port = os.environ.get('DATABASE_PORT'))
+#connection = Kalle.connect( host = os.environ.get('DATABASE_HOST'),
+#                            user = os.environ.get('DATABASE_USER'),
+#                            password = os.environ.get('DATABASE_PASSWORD'),
+#                            database = os.environ.get('DATABASE_DB'),
+#                           port = os.environ.get('DATABASE_PORT'))
 
 def get_connection():
     try:

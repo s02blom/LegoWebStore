@@ -1,7 +1,7 @@
 """https://flask.palletsprojects.com/en/3.0.x/tutorial/"""
 
 import os
-from flask import flask
+from flask import Flask
 
 def create_app(test_config=None):
     # create and configure the app
