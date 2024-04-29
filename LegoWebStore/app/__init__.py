@@ -21,5 +21,9 @@ def create_app(test_config=None):
     except OSError:
         pass
 
+    #Initilizes the database
+    from . import db
+    db.init_app(app)
+
     print("Flask instance created!")
     return app

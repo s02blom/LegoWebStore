@@ -28,4 +28,14 @@ def get_connection():
     return connection
 
 def close_connection(connection):
-    connection.close()
+    db = g.pop("db", None)
+    if db is not None:
+        db.close()
+
+def init_app(app):
+    app.teardown_appcontext(close_connection)
+    app.cli.add_command(init_db_command)
+@click.command("init_db")
+def init_db_command():
+    init_db()
+    click.echo("Initilizing the database")
