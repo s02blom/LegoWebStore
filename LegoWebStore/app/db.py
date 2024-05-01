@@ -38,27 +38,10 @@ def init_app(app):
 
 def init_db():
     db = get_connection()
-    #db.start_transaction()
-    cursor = db.cursor()
-    with current_app.open_resource("throwaway.sql", "r") as f:
-        print("Death and destruction")
-        file = f.read()
-        #cursor.execute(f.read())
-    #result = cursor.fetchall()
-    #print(result)
-    #cursor.execute("SHOW TABLES;")
-    #result = cursor.fetchall()
-    #print(result)
-    print(file)
-    statements = file.split(";")
-    #cursor.execute(file, multi=True)
-    statements[1] + ";"
-    statements[0] + ";"
-    cursor.execute(file, multi=True)
-    cursor.close()
-    print("!")
-    #db.commit()
-    print("Life and Hope")
+    with  db.cursor() as cursor:
+        with current_app.open_resource("throwaway.sql", "r") as f:
+            file = f.read()
+            cursor.execute(file, multi=True)
     close_connection(db)
 
 @click.command("init_db")
