@@ -21,6 +21,7 @@ Do note however that this is the default port for MySQL Workbench and you might 
 All figures are a UML diagrams written using [PlantUML](https://plantuml.com/). 
 
 ## Run
+Setup the server and other one time initilazations use `flask --app ./LegoWebStore/app init_db`
 To run the front end (as of now) use `flask --app ./python/Host.py run`
 When developing use this for live preview `flask --app ./LegoWebStore/app/views.py --debug run`. 
 
