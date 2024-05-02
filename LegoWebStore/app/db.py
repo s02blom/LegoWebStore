@@ -13,7 +13,7 @@ import click
 
 def get_connection():
     try:
-        connection = Kalle.connect( host = os.environ.get('DATABASE_HOST'),
+        g.db = Kalle.connect( host = os.environ.get('DATABASE_HOST'),
                                 user = os.environ.get('DATABASE_USER'),
                                 password = os.environ.get('DATABASE_PASSWORD'),
                                 database = os.environ.get('DATABASE_DB'),
@@ -25,7 +25,7 @@ def get_connection():
             print("Database does not exist")
         else:
             print(err)
-    return connection
+    return g.db
 
 def close_connection(connection):
     db = g.pop("db", None)
