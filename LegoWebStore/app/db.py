@@ -27,7 +27,7 @@ def get_connection():
             print(err)
     return g.db
 
-def close_connection(connection):
+def close_connection():
     db = g.pop("db", None)
     if db is not None:
         db.close()
@@ -42,7 +42,7 @@ def init_db():
         with current_app.open_resource("throwaway.sql", "r") as f:
             file = f.read()
             cursor.execute(file, multi=True)
-    close_connection(db)
+    close_connection()
 
 @click.command("init_db")
 def init_db_command():
