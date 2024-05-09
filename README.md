@@ -15,14 +15,14 @@ DATABASE_PASSWORD=my-password
 DATABASE_DB=my-database
 DATABASE_PORT=3306
 ```
-Do note however that this is the default port for MySQL Workbench and you might wish to change the port if you plan using that at the same time. 
+Do note however that this is the default port for MySQL Workbench and you might wish to change the port if you plan using that at the same time. The devcontainer currently utilizes the host network to bridge the application container and the MySQL container so it is recommended to keep the DATABASE_HOST as specified above. 
 
 ## Figures
-All figures are a UML diagrams written using [PlantUML](https://plantuml.com/). 
+All figures are a UML diagrams written using [PlantUML](https://plantuml.com/). You can eather download [PlantUML](https://plantuml.com/download) or use their online editor [PlantText](https://www.planttext.com/). 
 
 ## Run
-To run the front end (as of now) use `flask --app ./python/Host.py run`
-When developing use this for live preview `flask --app ./LegoWebStore/app/views.py --debug run`. 
+To run the front end (as of now) use `flask --app ./LegoWebStore/app/ run`
+When developing, use this for live preview `flask --app ./LegoWebStore/app/ --debug run`. 
 
 ## Disclaimer
 LEGO® is a trademark of the LEGO Group of companies which does not sponsor, authorize or endorse this project. 
