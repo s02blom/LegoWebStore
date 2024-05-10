@@ -1,0 +1,82 @@
+@startuml Schema
+
+entity LegoBrick{
+    ** ID {PK}** **int**
+    --
+    Dim_X   int
+    Dim_Y   int
+    Dim_Z   int
+    ..
+    StorageLocation {FK}    int
+}
+
+entity StorageLocation{
+    **ID {PK}   int**
+    --
+    Colour      varchar[6]
+    Quantity    int
+    Drawer      varchar[20]
+}
+
+entity LegoSet{
+    **ID {PK} int**
+    --
+    Name    varchar[200]
+    Price   float
+}
+
+entity Order{
+    **ID {PK}   int**
+    --
+    TotalSum    float
+    Date        DateTime
+    ShippingDate    DateTime
+    ArrivalDate     DateTime
+    ..
+    CustomerID  {FK}    int
+    ShippingAdress {FK}     int
+}
+
+entity Customer{
+    **ID {PK}   int**
+    --
+    CompanyName     varchar[200]
+    Country         varchar[2]
+    email           varchar[320]
+}
+
+
+entity LegoSetContent{
+    **LegoSet  {PK, FK} int**
+    **LegoBrick {PK, FK}  int**
+    --
+    Quantity    int 
+}
+
+entity ShippingAdress{
+    **ID {PK}   int**
+    --
+    StreetAdress    varchar[200]
+    PostCode        varchar[20]
+    City            varchar[200]
+    Country         varchar[2]
+}
+
+entity OrderContent{
+    **Order {PK, FK} int**
+    **LegoSet {PK, FK}  int**
+    --
+    Quantity    int
+}
+
+LegoBrick -- StorageLocation
+LegoBrick -- LegoSetContent
+
+LegoSet -- LegoSetContent
+LegoSet -- OrderContent
+
+Order -- OrderContent
+Order -- Customer
+Order -- ShippingAdress
+
+@enduml
