@@ -21,6 +21,7 @@ Do note however that this is the default port for MySQL Workbench and you might 
 All figures are a UML diagrams written using [PlantUML](https://plantuml.com/). You can eather download [PlantUML](https://plantuml.com/download) or use their online editor [PlantText](https://www.planttext.com/). 
 
 ## Run
+Setup the server and other one time initilazations use `flask --app ./LegoWebStore/app init_db`
 To run the front end (as of now) use `flask --app ./LegoWebStore/app/ run`
 When developing, use this for live preview `flask --app ./LegoWebStore/app/ --debug run`. 
 
