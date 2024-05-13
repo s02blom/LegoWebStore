@@ -8,7 +8,6 @@ entity LegoBrick{
     Dim_X
     Dim_Y
     Dim_Z
-    Material
 }
 
 entity Storage_location{
