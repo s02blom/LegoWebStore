@@ -3,8 +3,9 @@ DROP TABLE IF EXISTS LegoBrick, LegoSet, StorageLocation, LegoSetContent, Custom
 CREATE TABLE StorageLocation
 (
 	ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    Colour VARCHAR(6),
     Quantity INT,
+    House VARCHAR(1),
+    Section VARCHAR(2),
     Drawer VARCHAR(20)
 );
 
@@ -14,6 +15,7 @@ CREATE TABLE LegoBrick
     Dim_X INT,
     Dim_Y INT,
     Dim_Z INT,
+    Colour VARCHAR(6) DEFAULT `FFFFFF`,
     StorageLocation INT NOT NULL,
     FOREIGN KEY (StorageLocation) REFERENCES StorageLocation(ID)
 );
@@ -21,18 +23,8 @@ CREATE TABLE LegoBrick
 CREATE TABLE LegoSet
 (
 	ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    Name VARCHAR(200),
+    `Name` VARCHAR(200),
     Price FLOAT
-);
-
-CREATE TABLE LegoSetContent
-(
-	LegoSet INT NOT NULL,
-    LegoBrick INT NOT NULL,    
-    FOREIGN KEY (LegoSet) REFERENCES LegoSet(ID),
-	FOREIGN KEY (LegoBrick) REFERENCES LegoBrick(ID),
-    PRIMARY KEY (LegoSet, LegoBrick),
-    Quantity INT
 );
 
 CREATE TABLE Customer
@@ -63,6 +55,16 @@ CREATE TABLE `Order`
     ShippingAdress INT NOT NULL,    
 	FOREIGN KEY (CustomerID) REFERENCES Customer(ID),
 	FOREIGN KEY (ShippingAdress) REFERENCES ShippingAdress(ID)
+);
+
+CREATE TABLE LegoSetContent
+(
+	LegoSet INT NOT NULL,
+    LegoBrick INT NOT NULL,    
+    FOREIGN KEY (LegoSet) REFERENCES LegoSet(ID),
+	FOREIGN KEY (LegoBrick) REFERENCES LegoBrick(ID),
+    PRIMARY KEY (LegoSet, LegoBrick),
+    Quantity INT
 );
 
 CREATE TABLE OrderContent
