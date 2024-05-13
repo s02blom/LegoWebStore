@@ -6,6 +6,7 @@ entity LegoBrick{
     Dim_X   int
     Dim_Y   int
     Dim_Z   int
+    Colour varchar[6]
     ..
     StorageLocation {FK}    int
 }
@@ -13,6 +14,7 @@ entity LegoBrick{
 entity StorageLocation{
     **ID {PK}   int**
     --
+    Quantity   int
     House      varchar[1]
     Section    varchar[2]
     Drawer     int
@@ -69,18 +71,9 @@ entity OrderContent{
     Quantity    int
 }
 
-entity StorageLocationContent{
-    **LegoBrick {PK, FK} int**
-    **StorageLocation {PK, FK} int**
-    --
-    Colour      varchar[6]
-    Quantity    int
-}
 
-LegoBrick -- StorageLocationContent
+LegoBrick -- StorageLocation
 LegoBrick -- LegoSetContent
-
-StorageLocation -- StorageLocationContent
 
 LegoSet -- LegoSetContent
 LegoSet -- OrderContent
