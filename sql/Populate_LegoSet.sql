@@ -13,5 +13,6 @@ INSERT INTO LegoSet (Name, Price) values
 ('Sakura Tree', 75),
 ('Zoo', 115),
 ('Cyberpunk City', 179),
-('Cat Cafe', 99.99)
+('Cat Cafe', 99.99),
+('BTH', 1599,99)
 ;
