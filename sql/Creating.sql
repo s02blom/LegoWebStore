@@ -15,7 +15,7 @@ CREATE TABLE LegoBrick
     Dim_X INT,
     Dim_Y INT,
     Dim_Z INT,
-    Colour VARCHAR(6) DEFAULT `FFFFFF`,
+    Colour VARCHAR(6) DEFAULT "FFFFFF",
     StorageLocation INT NOT NULL,
     FOREIGN KEY (StorageLocation) REFERENCES StorageLocation(ID)
 );
