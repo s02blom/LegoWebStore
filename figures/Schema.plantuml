@@ -13,9 +13,9 @@ entity LegoBrick{
 entity StorageLocation{
     **ID {PK}   int**
     --
-    Colour      varchar[6]
-    Quantity    int
-    Drawer      varchar[20]
+    House      varchar[1]
+    Section    varchar[2]
+    Drawer     int
 }
 
 entity LegoSet{
@@ -69,8 +69,18 @@ entity OrderContent{
     Quantity    int
 }
 
-LegoBrick -- StorageLocation
+entity StorageLocationContent{
+    **LegoBrick {PK, FK} int**
+    **StorageLocation {PK, FK} int**
+    --
+    Colour      varchar[6]
+    Quantity    int
+}
+
+LegoBrick -- StorageLocationContent
 LegoBrick -- LegoSetContent
+
+StorageLocation -- StorageLocationContent
 
 LegoSet -- LegoSetContent
 LegoSet -- OrderContent
