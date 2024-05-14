@@ -4,5 +4,6 @@ INSERT INTO ShippingAdress (StreetAdress, PostCode, City, Country) VALUES
 ("Lyon dé trivo 6", "43115", "Lyon", "FR"),
 ("Louvre", "75001", "Paris", "FR"),
 ("Av. Gustave Eiffel", "75007", "Paris", "FR"),
-("Domkloster 4", "50667", "Köln", "DE")
+("Domkloster 4", "50667", "Köln", "DE"),
+("Verserbrogare 3", "1630", "Copenhagen V", "DK")
 ;
