@@ -48,9 +48,9 @@ CREATE TABLE `Order`
 (
 	ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     TotalSum FLOAT,
-    `Date` DATETIME,
-    ShippingDate DATETIME,
-    ArrivalDate DATETIME,
+    OrderDate DATE,
+    ShippingDate DATE,
+    ArrivalDate DATE,
     CustomerID INT NOT NULL,
     ShippingAdress INT NOT NULL,    
 	FOREIGN KEY (CustomerID) REFERENCES Customer(ID),

@@ -31,9 +31,9 @@ entity Order{
     **ID {PK}   int**
     --
     TotalSum    float
-    Date        DateTime
-    ShippingDate    DateTime
-    ArrivalDate     DateTime
+    OrderDate        Date
+    ShippingDate    Date
+    ArrivalDate     Date
     ..
     CustomerID  {FK}    int
     ShippingAdress {FK}     int
