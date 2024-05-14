@@ -51,9 +51,9 @@ CREATE TABLE `Order`
     OrderDate DATE,
     ShippingDate DATE,
     ArrivalDate DATE,
-    CustomerID INT NOT NULL,
+    Customer INT NOT NULL,
     ShippingAdress INT NOT NULL,    
-	FOREIGN KEY (CustomerID) REFERENCES Customer(ID),
+	FOREIGN KEY (Customer) REFERENCES Customer(ID),
 	FOREIGN KEY (ShippingAdress) REFERENCES ShippingAdress(ID)
 );
 
