@@ -36,15 +36,33 @@ def init_app(app):
     app.teardown_appcontext(close_connection)
     app.cli.add_command(init_db_command)
 
-def init_db():
+def create_tables() ->str:
     db = get_connection()
-    with  db.cursor() as cursor:
-        with current_app.open_resource("throwaway.sql", "r") as f:
+    with db.cursor() as cursor:
+        with current_app.open_resource("sql/Creating.sql", "r") as f:
+            file = f.read()
+            cursor.execute(file, multi=True)
+        res = cursor.fetchall()
+        db.commit()
+        get_tables = "show tables;"
+        cursor.execute(get_tables)
+        tables = cursor.fetchall()
+    close_connection(db)
+    return tables
+    
+
+def populate_tables():
+    db = get_connection()
+    with db.cursor() as cursor:
+        with current_app.open_resource("sql/Populate_StorageLocation.sql", "r") as f:
             file = f.read()
             cursor.execute(file, multi=True)
     close_connection(db)
 
 @click.command("init_db")
 def init_db_command():
-    init_db()
-    click.echo("Initilizing the database")
+    click.echo("Creating tables...")
+    click.echo(create_tables())
+    click.echo("Populating tables...")
+    populate_tables()
+    click.echo("Done!")
