@@ -8,6 +8,8 @@ INSERT INTO LegoSetContent (LegoSet, LegoBrick, Quantity) values
 (3, 5, 12),
 (3, 6, 14),
 (3, 13, 61),
+(4, 2, 55),
+(4, 13, 45),
 (5, 11, 9),
 (5, 15, 16),
 (5, 9, 4),
