@@ -6,7 +6,7 @@ CREATE TABLE StorageLocation
     Quantity INT,
     House VARCHAR(1),
     Section VARCHAR(2),
-    Drawer VARCHAR(20)
+    Drawer INT
 );
 
 CREATE TABLE LegoBrick
