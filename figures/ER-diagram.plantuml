@@ -8,14 +8,15 @@ entity LegoBrick{
     Dim_X
     Dim_Y
     Dim_Z
-    Material
+    Colour
 }
 
-entity Storage_location{
+entity StorageLocation{
     ID {PK}
     --
-    Colour
     Quantity
+    House
+    Section
     Drawer
 }
 
@@ -48,9 +49,10 @@ entity Are_A_Part_Of{
     Quantity
 }
 
+
 LegoBrick "0..n" --  Are_A_Part_Of
 Are_A_Part_Of -- "1" LegoSet
-LegoBrick "1" -- "1" Storage_location : Are stored in
+LegoBrick "1" -- "1" StorageLocation : Are stored in
 
 Customer "0..n" -- "1" Orders : Creates
 Orders "1..n" -- "1..n" LegoSet : Contains

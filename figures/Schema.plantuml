@@ -6,6 +6,7 @@ entity LegoBrick{
     Dim_X   int
     Dim_Y   int
     Dim_Z   int
+    Colour varchar[6]
     ..
     StorageLocation {FK}    int
 }
@@ -13,9 +14,10 @@ entity LegoBrick{
 entity StorageLocation{
     **ID {PK}   int**
     --
-    Colour      varchar[6]
-    Quantity    int
-    Drawer      varchar[20]
+    Quantity   int
+    House      varchar[1]
+    Section    varchar[2]
+    Drawer     int
 }
 
 entity LegoSet{
@@ -29,11 +31,11 @@ entity Order{
     **ID {PK}   int**
     --
     TotalSum    float
-    Date        DateTime
-    ShippingDate    DateTime
-    ArrivalDate     DateTime
+    OrderDate        Date
+    ShippingDate    Date
+    ArrivalDate     Date
     ..
-    CustomerID  {FK}    int
+    Customer  {FK}    int
     ShippingAdress {FK}     int
 }
 
@@ -68,6 +70,7 @@ entity OrderContent{
     --
     Quantity    int
 }
+
 
 LegoBrick -- StorageLocation
 LegoBrick -- LegoSetContent
