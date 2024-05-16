@@ -65,33 +65,11 @@ def populate_tables():
             cursor.execute(file, multi=True)
     close_connection(db)
 
-def test_create_wo_file():
-    db = get_connection()
-    sql_drop_statment = "DROP TABLE IF EXISTS LegoBrick, LegoSet, StorageLocation, LegoSetContent, Customer, ShippingAdress, `Order`, OrderContent;"
-    sql_create_statment = """
-    CREATE TABLE StorageLocation
-    (
-        ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-        Quantity INT,
-        House VARCHAR(1),
-        Section VARCHAR(2),
-        Drawer INT
-    );"""
-    with db.cursor() as cursor:
-        cursor.execute(sql_drop_statment)
-        print(cursor.fetchall())
-        for result in cursor.execute(sql_create_statment, multi=True):
-            print(result.fetchall())
-        cursor.execute("SHOW tables;")
-        print(cursor.fetchall())
-    close_connection(db)
-
 @click.command("init_db")
 def init_db_command():
     click.echo("Creating tables...")
     click.echo(f"Before: {get_tables()}")
     click.echo(create_tables())
-    #click.echo(test_create_wo_file())
     click.echo(f"After {get_tables()}")
     click.echo("Populating tables...")
     populate_tables()
