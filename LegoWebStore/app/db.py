@@ -38,35 +38,14 @@ def init_app(app):
     app.teardown_appcontext(close_connection)
     app.cli.add_command(init_db_command)
 
-def create_tables() ->list:
+def create_tables():
     db = get_connection()
-    print(id(db))
     with db.cursor() as cursor:
         with current_app.open_resource("sql/Creating.sql", "r") as f:
             file = f.read()
-            print(type(file))
-            cursor.execute(file, multi=True)
-            res = cursor.fetchall()
-            print(id(cursor))
-            print(res)
-
-            cursor.execute("show tables;")
-        #db.commit()
-    db.reconnect()
-#db.commit()
-    #db.close()
-    #db = get_connection()
-    print(id(db))
-    print(id(cursor))
-    with db.cursor() as cursor:    
-        print(id(cursor))
-        get_tables = "show tables;"
-        cursor.execute(get_tables)
-        #tables = cursor.fetchmany(size=2)
-        tables = cursor.fetchall()
+            for result in cursor.execute(file, multi=True):
+                result.fetchall()
     close_connection(db)
-    #print(tables)
-    return tables
     
 def get_tables():
     db = get_connection()
@@ -111,8 +90,8 @@ def test_create_wo_file():
 def init_db_command():
     click.echo("Creating tables...")
     click.echo(f"Before: {get_tables()}")
-    #click.echo(create_tables())
-    click.echo(test_create_wo_file())
+    click.echo(create_tables())
+    #click.echo(test_create_wo_file())
     click.echo(f"After {get_tables()}")
     click.echo("Populating tables...")
     populate_tables()
