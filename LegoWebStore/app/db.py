@@ -11,7 +11,7 @@ import click
 #                            database = os.environ.get('DATABASE_DB'),
 #                           port = os.environ.get('DATABASE_PORT'))
 
-def get_connection():
+def get_connection(set_autocommit = False):
     try:
         g.db = Kalle.connect( host = os.environ.get('DATABASE_HOST'),
                                 user = os.environ.get('DATABASE_USER'),
@@ -25,6 +25,8 @@ def get_connection():
             print("Database does not exist")
         else:
             print(err)
+    if (set_autocommit):
+        g.db.autocommit = set_autocommit
     return g.db
 
 def close_connection(connection):
@@ -36,20 +38,45 @@ def init_app(app):
     app.teardown_appcontext(close_connection)
     app.cli.add_command(init_db_command)
 
-def create_tables() ->str:
+def create_tables() ->list:
     db = get_connection()
+    print(id(db))
     with db.cursor() as cursor:
         with current_app.open_resource("sql/Creating.sql", "r") as f:
             file = f.read()
+            print(type(file))
             cursor.execute(file, multi=True)
-        res = cursor.fetchall()
-        db.commit()
+            res = cursor.fetchall()
+            print(id(cursor))
+            print(res)
+
+            cursor.execute("show tables;")
+        #db.commit()
+    db.reconnect()
+#db.commit()
+    #db.close()
+    #db = get_connection()
+    print(id(db))
+    print(id(cursor))
+    with db.cursor() as cursor:    
+        print(id(cursor))
         get_tables = "show tables;"
         cursor.execute(get_tables)
+        #tables = cursor.fetchmany(size=2)
         tables = cursor.fetchall()
     close_connection(db)
+    #print(tables)
     return tables
     
+def get_tables():
+    db = get_connection()
+    cur = db.cursor()
+    get = "SHOW TABLES;"
+    cur.execute(get)
+    res = cur.fetchall()
+    cur.close()
+    close_connection(db)
+    return res
 
 def populate_tables():
     db = get_connection()
@@ -59,10 +86,34 @@ def populate_tables():
             cursor.execute(file, multi=True)
     close_connection(db)
 
+def test_create_wo_file():
+    db = get_connection()
+    sql_drop_statment = "DROP TABLE IF EXISTS LegoBrick, LegoSet, StorageLocation, LegoSetContent, Customer, ShippingAdress, `Order`, OrderContent;"
+    sql_create_statment = """
+    CREATE TABLE StorageLocation
+    (
+        ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        Quantity INT,
+        House VARCHAR(1),
+        Section VARCHAR(2),
+        Drawer INT
+    );"""
+    with db.cursor() as cursor:
+        cursor.execute(sql_drop_statment)
+        print(cursor.fetchall())
+        for result in cursor.execute(sql_create_statment, multi=True):
+            print(result.fetchall())
+        cursor.execute("SHOW tables;")
+        print(cursor.fetchall())
+    close_connection(db)
+
 @click.command("init_db")
 def init_db_command():
     click.echo("Creating tables...")
-    click.echo(create_tables())
+    click.echo(f"Before: {get_tables()}")
+    #click.echo(create_tables())
+    click.echo(test_create_wo_file())
+    click.echo(f"After {get_tables()}")
     click.echo("Populating tables...")
     populate_tables()
     click.echo("Done!")
