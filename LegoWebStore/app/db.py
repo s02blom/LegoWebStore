@@ -57,20 +57,27 @@ def get_tables():
     close_connection(db)
     return res
 
-def populate_tables():
+def populate_tables() -> list:
     db = get_connection()
+    storageLocation = []
     with db.cursor() as cursor:
         with current_app.open_resource("sql/Populate_StorageLocation.sql", "r") as f:
             file = f.read()
-            cursor.execute(file, multi=True)
+            cursor.execute(file)
+            #for result in cursor.execute(file, multi=True):
+            #    result.fetchall()
+            cursor.execute("Select * from StorageLocation;")
+            storageLocation = cursor.fetchall()
+    db.commit()
     close_connection(db)
+    return storageLocation
 
 @click.command("init_db")
-def init_db_command():
+def init_db_command(): 
     click.echo("Creating tables...")
     click.echo(f"Before: {get_tables()}")
-    click.echo(create_tables())
+    create_tables()
     click.echo(f"After {get_tables()}")
     click.echo("Populating tables...")
-    populate_tables()
+    click.echo(populate_tables())
     click.echo("Done!")
