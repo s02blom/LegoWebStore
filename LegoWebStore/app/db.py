@@ -57,27 +57,30 @@ def get_tables():
     close_connection(db)
     return res
 
-def populate_tables() -> list:
+def populate_tables():
     db = get_connection()
-    storageLocation = []
+    population_files = ["Populate_StorageLocation.sql", 
+                        "Populate_LegoBrick.sql",
+                        "Populate_LegoSet.sql",
+                        "Populate_Customer.sql",
+                        "Populate_ShippingAdress.sql",
+                        "Populate_Order.sql",
+                        "Populate_LegoSetContent.sql",
+                        "Populate_OrderContent.sql"]
     with db.cursor() as cursor:
-        with current_app.open_resource("sql/Populate_StorageLocation.sql", "r") as f:
-            file = f.read()
-            cursor.execute(file)
-            #for result in cursor.execute(file, multi=True):
-            #    result.fetchall()
-            cursor.execute("Select * from StorageLocation;")
-            storageLocation = cursor.fetchall()
+        for file in population_files:
+            with current_app.open_resource("sql/"+file, "r") as f:
+                file = f.read()
+                cursor.execute(file)
+                cursor.fetchall()
+            db.commit()
     db.commit()
     close_connection(db)
-    return storageLocation
 
 @click.command("init_db")
 def init_db_command(): 
     click.echo("Creating tables...")
-    click.echo(f"Before: {get_tables()}")
     create_tables()
-    click.echo(f"After {get_tables()}")
     click.echo("Populating tables...")
-    click.echo(populate_tables())
+    populate_tables()
     click.echo("Done!")
