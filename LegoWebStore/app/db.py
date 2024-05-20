@@ -11,7 +11,7 @@ import click
 #                            database = os.environ.get('DATABASE_DB'),
 #                           port = os.environ.get('DATABASE_PORT'))
 
-def get_connection():
+def get_connection(set_autocommit = False):
     try:
         g.db = Kalle.connect( host = os.environ.get('DATABASE_HOST'),
                                 user = os.environ.get('DATABASE_USER'),
@@ -25,6 +25,8 @@ def get_connection():
             print("Database does not exist")
         else:
             print(err)
+    if (set_autocommit):
+        g.db.autocommit = set_autocommit
     return g.db
 
 def close_connection(connection):
@@ -36,15 +38,49 @@ def init_app(app):
     app.teardown_appcontext(close_connection)
     app.cli.add_command(init_db_command)
 
-def init_db():
+def create_tables():
     db = get_connection()
-    with  db.cursor() as cursor:
-        with current_app.open_resource("throwaway.sql", "r") as f:
+    with db.cursor() as cursor:
+        with current_app.open_resource("sql/Creating.sql", "r") as f:
             file = f.read()
-            cursor.execute(file, multi=True)
+            for result in cursor.execute(file, multi=True):
+                result.fetchall()
+    close_connection(db)
+    
+def get_tables():
+    db = get_connection()
+    cur = db.cursor()
+    get = "SHOW TABLES;"
+    cur.execute(get)
+    res = cur.fetchall()
+    cur.close()
+    close_connection(db)
+    return res
+
+def populate_tables():
+    db = get_connection()
+    population_files = ["Populate_StorageLocation.sql", 
+                        "Populate_LegoBrick.sql",
+                        "Populate_LegoSet.sql",
+                        "Populate_Customer.sql",
+                        "Populate_ShippingAdress.sql",
+                        "Populate_Order.sql",
+                        "Populate_LegoSetContent.sql",
+                        "Populate_OrderContent.sql"]
+    with db.cursor() as cursor:
+        for file in population_files:
+            with current_app.open_resource("sql/"+file, "r") as f:
+                file = f.read()
+                cursor.execute(file)
+                cursor.fetchall()
+            db.commit()
+    db.commit()
     close_connection(db)
 
 @click.command("init_db")
-def init_db_command():
-    init_db()
-    click.echo("Initilizing the database")
+def init_db_command(): 
+    click.echo("Creating tables...")
+    create_tables()
+    click.echo("Populating tables...")
+    populate_tables()
+    click.echo("Done!")
