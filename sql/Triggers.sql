@@ -7,7 +7,9 @@ BEGIN
     DECLARE sum, price INT;
     SELECT totalSum INTO sum FROM `Order` WHERE New.`Order` = `Order`.ID;
     SELECT Price INTO price FROM LegoSet  WHERE New.LegoSet = LegoSet.ID;
-    SET @totalSum = sum + price * New.Quantity;
+    UPDATE OrderContent set totalSum = sum + price * new.Quantity
+    WHERE `Order`.ID = New.`Order`;
+    
 END ??
 
 DELIMITER ;
