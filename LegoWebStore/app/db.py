@@ -12,10 +12,10 @@ import click
 #                           port = os.environ.get('DATABASE_PORT'))
 
 def get_connection(set_autocommit = False, user_root=False):
-	if user_root:
-		user = "root"
-	else:
-		user = os.environ.get('DATABASE_USER')
+    if user_root:
+        user = "root"
+    else:
+        user = os.environ.get('DATABASE_USER')
     try:
         g.db = Kalle.connect( host = os.environ.get('DATABASE_HOST'),
                                 user = user,
