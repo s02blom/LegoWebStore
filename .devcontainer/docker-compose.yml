@@ -24,6 +24,8 @@ services:
       - MYSQL_DATABASE=${DATABASE_DB}
       - MYSQL_USER=${DATABASE_USER}
       - MYSQL_PASSWORD=${DATABASE_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${DATABASE_PASSWORD}
+      - MYSQL_ROOT_HOST=%
     volumes:
       - ./docker/mysql/init:/docker-entrypoint-initdb.d
     ports: 

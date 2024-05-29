@@ -11,10 +11,14 @@ import click
 #                            database = os.environ.get('DATABASE_DB'),
 #                           port = os.environ.get('DATABASE_PORT'))
 
-def get_connection(set_autocommit = False):
+def get_connection(set_autocommit = False, user_root=False):
+    if user_root:
+        user = "root"
+    else:
+        user = os.environ.get('DATABASE_USER')
     try:
         g.db = Kalle.connect( host = os.environ.get('DATABASE_HOST'),
-                                user = os.environ.get('DATABASE_USER'),
+                                user = user,
                                 password = os.environ.get('DATABASE_PASSWORD'),
                                 database = os.environ.get('DATABASE_DB'),
                                 port = os.environ.get('DATABASE_PORT'))
@@ -77,8 +81,17 @@ def populate_tables():
     db.commit()
     close_connection(db)
 
+def set_log_bin_trust_function_creators(value=True):
+    db = get_connection(user_root=True)
+    with db.cursor() as cursor:
+        sql = "SET GLOBAL log_bin_trust_function_creators = 0;"
+        cursor.execute(sql)
+        cursor.fetchall()
+    close_connection(db)
+
 @click.command("init_db")
 def init_db_command(): 
+    set_log_bin_trust_function_creators(1)
     click.echo("Creating tables...")
     create_tables()
     click.echo("Populating tables...")
