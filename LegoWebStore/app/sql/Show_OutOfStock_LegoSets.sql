@@ -15,7 +15,7 @@ BEGIN
 	INNER JOIN LegoBrick ON LegoSetContent.LegoBrick = LegoBrick.ID
 	INNER JOIN StorageLocation ON LegoBrick.StorageLocation = StorageLocation.ID
 	WHERE (StorageLocation.Quantity <= LegoSetContent.Quantity)
-	GROUP BY LegoSet.`Name`, LegoSet.Price
+	GROUP BY LegoSet.`Name`
 	ORDER BY LegoSet.`Name`;
 END%%
 
