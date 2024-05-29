@@ -84,7 +84,7 @@ def populate_tables():
 def set_log_bin_trust_function_creators(value=True):
     db = get_connection(user_root=True)
     with db.cursor() as cursor:
-        sql = "SET GLOBAL log_bin_trust_function_creators = 0;"
+        sql = f"SET GLOBAL log_bin_trust_function_creators = {value};"
         cursor.execute(sql)
         cursor.fetchall()
     close_connection(db)
