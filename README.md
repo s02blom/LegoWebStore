@@ -10,12 +10,12 @@ This repository contains a dev container with a MySQL server and python. It also
 The `.env` file should be located inside [`.devcontainer`](./.devcontainer/). Here is an example of an appripriate `.env` file:
 ```
 DATABASE_HOST=127.0.0.1
-DATABASE_USER=ROOT
+DATABASE_USER=some_user
 DATABASE_PASSWORD=my-password
 DATABASE_DB=my-database
 DATABASE_PORT=3306
 ```
-Do note however that this is the default port for MySQL Workbench and you might wish to change the port if you plan using that at the same time. The devcontainer currently utilizes the host network to bridge the application container and the MySQL container so it is recommended to keep the DATABASE_HOST as specified above. 
+Do note however that this is the default port for MySQL Workbench and you might wish to change the port if you plan using that at the same time. The devcontainer currently utilizes the host network to bridge the application container and the MySQL container so it is recommended to keep the DATABASE_HOST as specified above. Please note that the root super user for your MySQL container will have the same password as your user. 
 
 ## Figures
 All figures are a UML diagrams written using [PlantUML](https://plantuml.com/). You can eather download [PlantUML](https://plantuml.com/download) or use their online editor [PlantText](https://www.planttext.com/). 
