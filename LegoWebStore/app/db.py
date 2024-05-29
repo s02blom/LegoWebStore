@@ -44,7 +44,16 @@ def init_db():
             cursor.execute(file, multi=True)
     close_connection(db)
 
+def set_log_bin_trust_function_creators(value=True):
+    db = get_connection(True)
+    with db.cursor() as cursor:
+        sql = "SET GLOBAL log_bin_trust_function_creators = 0;"
+        cursor.execute(sql)
+        cursor.fetchall()
+    close_connection(db)
+
 @click.command("init_db")
 def init_db_command():
+    set_log_bin_trust_function_creators(1)
     init_db()
     click.echo("Initilizing the database")
