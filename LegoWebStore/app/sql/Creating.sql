@@ -47,7 +47,7 @@ CREATE TABLE ShippingAdress
 CREATE TABLE `Order`
 (
 	ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    TotalSum FLOAT,
+    TotalSum FLOAT DEFAULT 0,
     OrderDate DATE,
     ShippingDate DATE,
     ArrivalDate DATE,
