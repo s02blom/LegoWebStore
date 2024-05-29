@@ -69,8 +69,8 @@ def populate_tables():
                         "Populate_Customer.sql",
                         "Populate_ShippingAdress.sql",
                         "Populate_Order.sql",
-                        "Populate_LegoSetContent.sql",
-                        "Populate_OrderContent.sql"]
+                        "Populate_LegoSetContent.sql"]
+                        #"Populate_OrderContent.sql"]
     with db.cursor() as cursor:
         for file in population_files:
             with current_app.open_resource("sql/"+file, "r") as f:
@@ -89,11 +89,18 @@ def set_log_bin_trust_function_creators(value=True):
         cursor.fetchall()
     close_connection(db)
 
+def add_triggers():
+    pass
+
 @click.command("init_db")
 def init_db_command(): 
-    set_log_bin_trust_function_creators(1)
+    
     click.echo("Creating tables...")
     create_tables()
+    click.echo("Adding triggers...")
+    set_log_bin_trust_function_creators(1)
+    add_triggers()
+    #set_log_bin_trust_function_creators(0)
     click.echo("Populating tables...")
     populate_tables()
     click.echo("Done!")
