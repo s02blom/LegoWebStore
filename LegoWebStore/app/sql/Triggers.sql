@@ -1,6 +1,5 @@
 DROP TRIGGER IF EXISTS SumOrder;
 
-DELIMITER $$
 CREATE TRIGGER SumOrder BEFORE INSERT ON OrderContent
 FOR EACH ROW 
 BEGIN    
@@ -11,6 +10,4 @@ BEGIN
 		SET TotalSum = oldValue + pricePerKit * new.Quantity
 		WHERE `Order`.ID = New.`Order`;
     
-END $$
-
-DELIMITER ;
+END
