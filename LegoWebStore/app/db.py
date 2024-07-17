@@ -96,7 +96,6 @@ def add_triggers():
         for file in trigger_files:
             with current_app.open_resource("sql/"+file, "r") as f:
                 content = f.read()
-                print(content)
                 cursor.execute(content, multi=True)
                 cursor.fetchall()
     close_connection(db)
