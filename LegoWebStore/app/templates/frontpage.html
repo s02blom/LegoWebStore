@@ -9,12 +9,26 @@
         our merchendise and order however many you feel fit's your needs. 
     </p>
     <h2>Currently Avilable Lego Sets</h2>
-    <div class = "box">
+    <div class = "sql", style="overflow-y:auto">
         <p>WE are a box!</p>
+        <table>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Price</th>
+            </tr>
+            {% for set in lego_sets%}
+                <tr>
+                    <th>{{set[0]}}</th>
+                    <th>{{set[1]}}</th>
+                    <th>{{set[2]}}</th>
+                </tr>
+            {%endfor%}
+        </table>
     </div>
 
     <h2>Currently Unavilable Lego Sets</h2>
-    <div class="box">
+    <div class="sql">
         <p>I am new Box!</p>
         <div class="button">
             <button type="button">Submit</button>
