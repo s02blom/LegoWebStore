@@ -10,7 +10,6 @@
     </p>
     <h2>Currently Avilable Lego Sets</h2>
     <div class = "sql", style="overflow-y:auto">
-        <!-- <p>WE are a box!</p> -->
         <table>
             <tr>
                 <th>Id</th>
@@ -28,32 +27,29 @@
     </div>
 
     <h2>Currently Unavilable Lego Sets</h2>
-    <div class="sql">
-        <div class = "sql", style="overflow-y:auto">
-            <!-- <p>WE are a box!</p> -->
-            <table>
+    <div class = "sql", style="overflow-y:auto">
+        <table>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Price</th>
+            </tr>
+            {% for set in unavilable_sets%}
                 <tr>
-                    <th>Id</th>
-                    <th>Name</th>
-                    <th>Price</th>
+                    <td>{{set[0]}}</td>
+                    <td>{{set[1]}}</td>
+                    <td>{{set[2]}}</td>
                 </tr>
-                {% for set in unavilable_sets%}
-                    <tr>
-                        <td>{{set[0]}}</td>
-                        <td>{{set[1]}}</td>
-                        <td>{{set[2]}}</td>
-                    </tr>
-                {%endfor%}
-            </table>
-        </div>
-        <div class="button">
-            <button type="button">Submit</button>
-        </div>
+            {%endfor%}
+        </table>
     </div>
 
     <h2>Order Lego Set</h2>
     <div class="box">
         <p>Make a form here!</p>
+        <div class="button">
+            <button type="button">Submit</button>
+        </div>
     </div>
 
     <h2>Order Lego Peaces</h2>
