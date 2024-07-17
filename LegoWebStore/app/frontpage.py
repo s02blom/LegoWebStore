@@ -11,5 +11,6 @@ def index():
     connection = db.get_connection()
     with connection.cursor() as cursor:
         """Get things from server"""
-        pass
-    return render_template("frontpage.html")
+        cursor.execute("SELECT * from LegoSet")
+        lego_sets = cursor.fetchall()
+    return render_template("frontpage.html", lego_sets=lego_sets)
