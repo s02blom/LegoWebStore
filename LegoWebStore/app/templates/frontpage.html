@@ -10,14 +10,14 @@
     </p>
     <h2>Currently Avilable Lego Sets</h2>
     <div class = "sql", style="overflow-y:auto">
-        <p>WE are a box!</p>
+        <!-- <p>WE are a box!</p> -->
         <table>
             <tr>
                 <th>Id</th>
                 <th>Name</th>
                 <th>Price</th>
             </tr>
-            {% for set in lego_sets%}
+            {% for set in avilable_sets%}
                 <tr>
                     <td>{{set[0]}}</td>
                     <td>{{set[1]}}</td>
@@ -29,7 +29,23 @@
 
     <h2>Currently Unavilable Lego Sets</h2>
     <div class="sql">
-        <p>I am new Box!</p>
+        <div class = "sql", style="overflow-y:auto">
+            <!-- <p>WE are a box!</p> -->
+            <table>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                </tr>
+                {% for set in unavilable_sets%}
+                    <tr>
+                        <td>{{set[0]}}</td>
+                        <td>{{set[1]}}</td>
+                        <td>{{set[2]}}</td>
+                    </tr>
+                {%endfor%}
+            </table>
+        </div>
         <div class="button">
             <button type="button">Submit</button>
         </div>

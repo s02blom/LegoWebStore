@@ -9,8 +9,9 @@ blueprint = Blueprint('frontpage', __name__)
 def index():
     print("Found / and index")
     connection = db.get_connection()
+    unavilable_sets = []
     with connection.cursor() as cursor:
         """Get things from server"""
         cursor.execute("SELECT * from LegoSet")
-        lego_sets = cursor.fetchall()
-    return render_template("frontpage.html", lego_sets=lego_sets)
+        avilable_sets = cursor.fetchall()
+    return render_template("frontpage.html", avilable_sets=avilable_sets, unavilable_sets=unavilable_sets)
