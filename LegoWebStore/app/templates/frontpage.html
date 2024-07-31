@@ -23,8 +23,21 @@
 
     <h2>Order Lego Sets</h2>
     <div class="box">
-        <form>
+        <form method="POST", action="">
         <!-- See for dynamic forms https://sagarkaurav.hashnode.dev/flask-wtf-forms-dynamic-fields-using-javascript -->
+            <h3>Company details</h3>
+            {{form.csrf_token}}
+            {{form.company_name.label}} {{form.company_name()}}<br>
+            {{form.company_country.label}} {{form.company_country()}}<br>
+            {{form.email.label}} {{form.email()}}<br>
+            <h3>Shipping adress</h3>
+            {{form.street_adress.label}} {{form.street_adress()}}<br>
+            {{form.post_code.label}} {{form.post_code()}}<br>
+            {{form.city.label}} {{form.city()}} <br>
+            {{form.shipping_country.label}} {{form.shipping_country()}}<br>
+            <h3>Order</h3>
+            {{form.lego_id.label}} {{form.lego_id()}} {{form.lego_quantity.lable}} {{form.lego_quantity()}}
+            <button type="submit">Complete purchase</button>
         </form>
         <p>Make form here!</p>
     </div>
