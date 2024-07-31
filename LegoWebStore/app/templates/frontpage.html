@@ -38,7 +38,43 @@
             <h3>Order</h3>
             {{form.lego_id.label}} {{form.lego_id()}} {{form.lego_quantity.lable}} {{form.lego_quantity()}}
             <button type="submit">Complete purchase</button>
+            <button id="add-lego-set-field" type="button">Add more Lego sets</button>
         </form>
-        <p>Make form here!</p>
     </div>
 {%endblock%}
+
+<script>
+    window.onload = function() {
+        console.log("Loaded window")
+        let addLegoSetFieldButton = document.getElementById('add-lego-set-field');
+        addLegoSetFieldButton.addEventListener('click', function(e){
+            e.preventDefault();
+            //Print to console
+            console.log("Clicked button!")
+            let allLegoSetsFieldWrapper = document.getElementById('lego_id');
+            let allLegoSetsField = allLegoSetsFieldWrapper.getElementsByTagName('input');
+            if (allLegoSetsField > 99)
+            {
+                alert("You can only order 100 Lego set's at a time");
+                return;
+            }
+            let legoSetsInputId = []
+            for (let i = 0; i < allLegoSetsField.length; i++)
+            {
+                legoSetsInputId.push(parseInt(allLegoSetsField[i].name.split("-")[1]));
+            }
+            let newFieldNameId = `lego_id-${Math.max(...legoSetsInputId) + 1}`;
+            let newFieldNameQuantity = `lego_quantity-${Math.max(...legoSetsInputId) + 1}`;
+            allLegoSetsFieldWrapper.insertAdjacentHTML("beforeend",`
+            <li>
+                <lable for="${newFieldNameId}">{{form.lego_id.lable}}</lable> 
+                <input id="${newFieldNameId}" name="${newFieldNameId}" type="number", value="">
+            </li>
+            <li>
+                <lable for="${newFieldNameQuantity}">{{form.lego_quantity.lable}}</lable> 
+                <input id="${newFieldNameQuantity}" name="${newFieldNameQuantity}" type="number", value="">
+            </li>
+            `);
+        });
+    }
+</script>
