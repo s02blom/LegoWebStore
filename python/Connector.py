@@ -18,13 +18,17 @@ with connection:
         sql = "SHOW TABLES;"
         cursor.execute(sql)
         print(cursor.fetchall())
-        sql = """CREATE TABLE IF NOT EXISTS guestbook (
-            id MEDIUMINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-            visitor_name VARCHAR(255) NOT NULL,
-            note TEXT NULL,
-            created_at DATETIME DEFAULT now()
-            );"""
+        # sql = """CREATE TABLE IF NOT EXISTS guestbook (
+        #     id MEDIUMINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        #     visitor_name VARCHAR(255) NOT NULL,
+        #     note TEXT NULL,
+        #     created_at DATETIME DEFAULT now()
+        #     );"""
+        #cursor.execute(sql)
+        sql = "Select * from LegoSet;"
         cursor.execute(sql)
-        sql = "SHOW TABLES;"
-        cursor.execute(sql)
+        lego_set = cursor.fetchall()
+        for set in lego_set:
+            print(set)
+        print(lego_set)
         print(cursor.fetchall())
