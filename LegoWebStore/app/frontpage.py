@@ -15,7 +15,43 @@ def index():
     new_order = NewOrder()
     if new_order.validate_on_submit():
         print(f"Company name: {new_order.company_name.data}")
-        pass
+        print(f"Length of lego_id: {len(new_order.lego_id)}")
+        customer_sql = f"""
+        INSERT INTO Customer (CompanyName, Country, Email) VALUES
+        ({new_order.company_name.data}, {new_order.company_country.data}, {new_order.email.data})
+        """
+        get_customer_id_sql = f"SELECT Customer.id FROM Customer WHERE Customer.CompanyName = {new_order.company_name.data}"
+        shipping_adress_sql = f"""
+        INSERT INTO ShippingAdress (StreetAdress, PostCode, City, Country) VALUES
+        ({new_order.street_adress.data}, {new_order.post_code.data}, {new_order.city.data}, {new_order.shipping_country.data})
+        """
+        get_shipping_adress_id_sql = f"SELECT ShippingAdress.id FROM ShippingAdress WHERE ShippingAdress.StreetAdress = {new_order.street_adress.data}"
+        order_sql = """
+        INSERT INTO Order (OrderDate, ShippingDate, ArrivalDate, Customer, ShippingAdress) VALUES
+        (curdate(), DATE_ADD(curdate(), INTERVAL 2 DAY), DATE_ADD(curdate(), INTERVAL 7 DAY), %s, %s )
+        """
+        get_order_id_sql = "SELECT Order.id FROM Order WHERE Order.Customer = %s"
+        order_content_sql = """
+        INSERT INTO OrderContent (Order, LegoSet, Quantity) VALUES
+        (%s, %s, %s)
+        """
+        with connection.cursor() as cursor:
+            cursor.execute(customer_sql)
+            cursor.fetchall()
+            cursor.execute(get_customer_id_sql)
+            customer_id = cursor.fetchall()
+            cursor.execute(shipping_adress_sql)
+            cursor.fetchall()
+            cursor.execute(get_shipping_adress_id_sql)
+            shipping_id = cursor.fetchall()
+            cursor.execute(order_sql, shipping_id)
+            cursor.fetchall()
+            cursor.execute(get_order_id_sql, customer_id)
+            order_id = cursor.fetchall()
+            for i in enumerate(new_order.lego_id):
+                print(i)
+                #cursor.execute(order_content_sql, (order_id, lego_set_id, ))
+
     with connection.cursor() as cursor:
         """Get things from server"""
         cursor.execute("SELECT * from LegoSet")
