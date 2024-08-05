@@ -36,12 +36,12 @@
             {{form.city.label}} {{form.city()}} <br>
             {{form.shipping_country.label}} {{form.shipping_country()}}<br>
             <h3>Order</h3>
-            {{form.lego_id.label}} {{form.lego_id()}} {{form.lego_quantity.lable}} {{form.lego_quantity()}}
+            {{form.lego_id()}} {{form.lego_quantity()}}
             <button type="submit">Complete purchase</button>
             <button id="add-lego-set-field" type="button">Add more Lego sets</button>
         </form>
     </div>
-{%endblock%}
+
 
 <script>
     window.onload = function() {
@@ -51,7 +51,7 @@
             e.preventDefault();
             //Print to console
             console.log("Clicked button!")
-            let allLegoSetsFieldWrapper = document.getElementById('lego_id');
+            let allLegoSetsFieldWrapper = document.getElementById('lego_quantity');
             let allLegoSetsField = allLegoSetsFieldWrapper.getElementsByTagName('input');
             if (allLegoSetsField > 99)
             {
@@ -66,15 +66,17 @@
             let newFieldNameId = `lego_id-${Math.max(...legoSetsInputId) + 1}`;
             let newFieldNameQuantity = `lego_quantity-${Math.max(...legoSetsInputId) + 1}`;
             allLegoSetsFieldWrapper.insertAdjacentHTML("beforeend",`
+            <br>
             <li>
-                <lable for="${newFieldNameId}">{{form.lego_id.lable}}</lable> 
+                <lable for="${newFieldNameId}">Lego set id ${Math.max(...legoSetsInputId) + 2}</lable> 
                 <input id="${newFieldNameId}" name="${newFieldNameId}" type="number", value="">
             </li>
             <li>
-                <lable for="${newFieldNameQuantity}">{{form.lego_quantity.lable}}</lable> 
+                <lable for="${newFieldNameQuantity}">Quantity ${Math.max(...legoSetsInputId) + 2}</lable> 
                 <input id="${newFieldNameQuantity}" name="${newFieldNameQuantity}" type="number", value="">
             </li>
             `);
         });
     }
 </script>
+{%endblock%}
