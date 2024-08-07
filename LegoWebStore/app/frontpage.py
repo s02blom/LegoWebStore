@@ -14,8 +14,6 @@ def index():
     unavilable_sets = []
     new_order = NewOrder()
     if new_order.validate_on_submit():
-        print(f"Company name: {new_order.company_name.data}")
-        print(f"Length of lego_id: {len(new_order.lego_id)}")
         customer_sql = """
         INSERT INTO Customer (CompanyName, Country, Email) VALUES
         (%(name)s, %(country)s, %(email)s)
@@ -46,12 +44,9 @@ def index():
         with connection.cursor() as cursor:
             # Start a transaction here
             cursor.execute(customer_sql, customer_help)
-            #cursor.fetchall()
-            #cursor.execute(get_customer_id_sql, new_order.company_name.data)
             customer_id = cursor.lastrowid
             cursor.execute(shipping_adress_sql, shipping_adress_data)
             cursor.fetchall()
-            #cursor.execute(get_shipping_adress_id_sql, new_order.street_adress.data)
             shipping_id = cursor.lastrowid
             order_data = {
                 "customer": customer_id,
@@ -59,17 +54,14 @@ def index():
             }
             cursor.execute(order_sql, order_data)
             cursor.fetchall()
-            #cursor.execute(get_order_id_sql, customer_id)
             order_id = cursor.lastrowid
             connection.commit()
             for i in range(len(new_order.lego_id)):
-                print(f"i = {i}")
                 order_content_data = {
                     "order" : order_id,
                     "lego": new_order.lego_id[i].data,
                     "quantity": new_order.lego_quantity[i].data
                 }
-                print(order_content_data)
                 cursor.execute(order_content_sql, order_content_data)
             connection.commit()
 
