@@ -16,41 +16,62 @@ def index():
     if new_order.validate_on_submit():
         print(f"Company name: {new_order.company_name.data}")
         print(f"Length of lego_id: {len(new_order.lego_id)}")
-        customer_sql = f"""
+        customer_sql = """
         INSERT INTO Customer (CompanyName, Country, Email) VALUES
-        ({new_order.company_name.data}, {new_order.company_country.data}, {new_order.email.data})
+        (%(name)s, %(country)s, %(email)s)
         """
-        get_customer_id_sql = f"SELECT Customer.id FROM Customer WHERE Customer.CompanyName = {new_order.company_name.data}"
-        shipping_adress_sql = f"""
+        customer_help = {
+            "name" : new_order.company_name.data,
+            "country": new_order.company_country.data,
+            "email": new_order.email.data
+        }
+        shipping_adress_sql = """
         INSERT INTO ShippingAdress (StreetAdress, PostCode, City, Country) VALUES
-        ({new_order.street_adress.data}, {new_order.post_code.data}, {new_order.city.data}, {new_order.shipping_country.data})
+        (%(street)s, %(code)s, %(city)s, %(country)s)
         """
-        get_shipping_adress_id_sql = f"SELECT ShippingAdress.id FROM ShippingAdress WHERE ShippingAdress.StreetAdress = {new_order.street_adress.data}"
+        shipping_adress_data = {
+            "street": new_order.street_adress.data,
+            "code": new_order.post_code.data,
+            "city": new_order.city.data,
+            "country": new_order.shipping_country.data
+        }
         order_sql = """
-        INSERT INTO Order (OrderDate, ShippingDate, ArrivalDate, Customer, ShippingAdress) VALUES
-        (curdate(), DATE_ADD(curdate(), INTERVAL 2 DAY), DATE_ADD(curdate(), INTERVAL 7 DAY), %s, %s )
+        INSERT INTO `Order` (OrderDate, ShippingDate, ArrivalDate, Customer, ShippingAdress) VALUES
+        (curdate(), DATE_ADD(curdate(), INTERVAL 2 DAY), DATE_ADD(curdate(), INTERVAL 7 DAY), %(customer)s, %(shipping)s )
         """
-        get_order_id_sql = "SELECT Order.id FROM Order WHERE Order.Customer = %s"
         order_content_sql = """
-        INSERT INTO OrderContent (Order, LegoSet, Quantity) VALUES
-        (%s, %s, %s)
+        INSERT INTO OrderContent (`Order`, LegoSet, Quantity) VALUES
+        (%(order)s, %(lego)s, %(quantity)s)
         """
         with connection.cursor() as cursor:
-            cursor.execute(customer_sql)
+            # Start a transaction here
+            cursor.execute(customer_sql, customer_help)
+            #cursor.fetchall()
+            #cursor.execute(get_customer_id_sql, new_order.company_name.data)
+            customer_id = cursor.lastrowid
+            cursor.execute(shipping_adress_sql, shipping_adress_data)
             cursor.fetchall()
-            cursor.execute(get_customer_id_sql)
-            customer_id = cursor.fetchall()
-            cursor.execute(shipping_adress_sql)
+            #cursor.execute(get_shipping_adress_id_sql, new_order.street_adress.data)
+            shipping_id = cursor.lastrowid
+            order_data = {
+                "customer": customer_id,
+                "shipping": shipping_id
+            }
+            cursor.execute(order_sql, order_data)
             cursor.fetchall()
-            cursor.execute(get_shipping_adress_id_sql)
-            shipping_id = cursor.fetchall()
-            cursor.execute(order_sql, shipping_id)
-            cursor.fetchall()
-            cursor.execute(get_order_id_sql, customer_id)
-            order_id = cursor.fetchall()
-            for i in enumerate(new_order.lego_id):
-                print(i)
-                #cursor.execute(order_content_sql, (order_id, lego_set_id, ))
+            #cursor.execute(get_order_id_sql, customer_id)
+            order_id = cursor.lastrowid
+            connection.commit()
+            for i in range(len(new_order.lego_id)):
+                print(f"i = {i}")
+                order_content_data = {
+                    "order" : order_id,
+                    "lego": new_order.lego_id[i].data,
+                    "quantity": new_order.lego_quantity[i].data
+                }
+                print(order_content_data)
+                cursor.execute(order_content_sql, order_content_data)
+            connection.commit()
 
     with connection.cursor() as cursor:
         """Get things from server"""
