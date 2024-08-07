@@ -9,11 +9,42 @@
         our merchendise and order however many you feel fit's your needs. 
     </p>
     <h2>Currently Avilable Lego Sets</h2>
-    <div class = "box">
-        <p>WE are a box!</p>
+    <div class = "sql", style="overflow-y:auto">
+        <table>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Price</th>
+            </tr>
+            {% for set in avilable_sets%}
+                <tr>
+                    <td>{{set[0]}}</td>
+                    <td>{{set[1]}}</td>
+                    <td>{{set[2]}}</td>
+                </tr>
+            {%endfor%}
+        </table>
     </div>
 
     <h2>Currently Unavilable Lego Sets</h2>
+    <div class = "sql", style="overflow-y:auto">
+        <table>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Price</th>
+            </tr>
+            {% for set in unavilable_sets%}
+                <tr>
+                    <td>{{set[0]}}</td>
+                    <td>{{set[1]}}</td>
+                    <td>{{set[2]}}</td>
+                </tr>
+            {%endfor%}
+        </table>
+    </div>
+
+    <h2>Order Lego Set</h2>
     <div class="box">
         <p>Make a form here!</p>
         <div class="button">
