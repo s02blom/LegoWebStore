@@ -3,6 +3,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, FieldList, IntegerField
 from wtforms.validators import DataRequired
 from . import db
+import mysql.connector
 
 blueprint = Blueprint('frontpage', __name__)
 
@@ -42,27 +43,29 @@ def index():
         (%(order)s, %(lego)s, %(quantity)s)
         """
         with connection.cursor() as cursor:
-            # Start a transaction here
-            cursor.execute(customer_sql, customer_help)
-            customer_id = cursor.lastrowid
-            cursor.execute(shipping_adress_sql, shipping_adress_data)
-            cursor.fetchall()
-            shipping_id = cursor.lastrowid
-            order_data = {
-                "customer": customer_id,
-                "shipping": shipping_id
-            }
-            cursor.execute(order_sql, order_data)
-            cursor.fetchall()
-            order_id = cursor.lastrowid
-            connection.commit()
-            for i in range(len(new_order.lego_id)):
-                order_content_data = {
-                    "order" : order_id,
-                    "lego": new_order.lego_id[i].data,
-                    "quantity": new_order.lego_quantity[i].data
+            try:
+                cursor.execute(customer_sql, customer_help)
+                customer_id = cursor.lastrowid
+                cursor.execute(shipping_adress_sql, shipping_adress_data)
+                cursor.fetchall()
+                shipping_id = cursor.lastrowid
+                order_data = {
+                    "customer": customer_id,
+                    "shipping": shipping_id
                 }
-                cursor.execute(order_content_sql, order_content_data)
+                cursor.execute(order_sql, order_data)
+                cursor.fetchall()
+                order_id = cursor.lastrowid
+                for i in range(len(new_order.lego_id)):
+                    order_content_data = {
+                        "order" : order_id,
+                        "lego": new_order.lego_id[i].data,
+                        "quantity": new_order.lego_quantity[i].data
+                    }
+                    cursor.execute(order_content_sql, order_content_data)
+            except mysql.connector.Error as err:
+                print(f"Unable to complete request\n Error: {err}")
+                connection.rollback()
             connection.commit()
 
     with connection.cursor() as cursor:
