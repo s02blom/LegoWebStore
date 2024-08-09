@@ -18,7 +18,50 @@
     <div class="box"></div>
 
     <h2>Orders</h2>
-    <div class="box"></div>
+    <div class="sql", style="overflow-y:auto;">
+        <table>
+            <tr>
+                <th>Id</th>
+                <th>Total Sum</th>
+                <th>Customer ID</th>
+                <th>Shipping Adress</th>
+                <th>Order Date</th>
+                <th>Shipping Date</th>
+                <th>Arrival Date</th>
+                <th>Order Content</th>
+            </tr>
+            {% for data in orders%}
+                <tr>
+                    <td>{{data[0]}}</td>
+                    <td>{{data[1]}}</td>
+                    <td>{{data[2]}}</td>
+                    <td>{{data[3]}}</td>
+                    <td>{{data[4]}}</td>
+                    <td>{{data[5]}}</td>
+                    <td>{{data[6]}}</td>
+                    <td>
+                        <table border="2">
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                            </tr>
+                            <tr>
+                                {% for set in data[7] %}
+                                    <th>{{set[0]}}</th>
+                                    <th>{{set[1]}}</th>
+                                    <th>{{set[2]}}</th>
+                                    <th>{{set[3]}}</th>
+                                {%endfor%}
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            {%endfor%}
+        </table>
+    </div>      
+    <!-- <div class="box"></div> -->
 
     <h2>Lego Pieces</h2>
     <div class="box"></div>
