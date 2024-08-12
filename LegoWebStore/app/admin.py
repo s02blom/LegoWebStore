@@ -6,14 +6,12 @@ blueprint = Blueprint('admin', __name__)
 @blueprint.route("/admin", methods=("GET", "POST"))
 def index():
     print("Found admins page")
-    # I need a data set that contains All the data about and order, with
-    # a sublist of information about the lego sets themselves. Unfortunatly I
-    # belive it has to be split into two different sql statements to get the right 
-    # structure in Python. ``
     order_sql = """
     SELECT `Order`.id, `Order`.TotalSum, `Order`.Customer, `Order`.ShippingAdress, `Order`.OrderDate, `Order`.ShippingDate, `Order`.ArrivalDate
     FROM `Order`
-    """
+    """ 
+    # Because of how the data has to be structured to be able to displaye it we 
+    # have to split this into two different queries. 
     order_content_sql = """
     SELECT id, LegoSet.Name, OrderContent.Quantity, (OrderContent.quantity * LegoSet.price)
     FROM OrderContent
@@ -28,15 +26,14 @@ def index():
     with connection.cursor() as cursor:
         cursor.execute(order_sql)
         orders = cursor.fetchall()
-        for data in orders:
-            data = list(data)
+        for i in range(0, len(orders)):
+            data = list(orders[i])   
             id_dict = {
                 "id": data[0]
             }
             cursor.execute(order_content_sql, id_dict)
-            kalle = cursor.fetchall()
-            print(kalle)
-            data.append(kalle)
+            order_content = cursor.fetchall()
+            data.append(order_content)
+            orders[i] = data    # Replace the old set with the modified list instead
 
-    print("-----\n",orders[0])
     return render_template("admin.html", orders=orders)
