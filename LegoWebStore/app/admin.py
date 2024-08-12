@@ -7,13 +7,14 @@ blueprint = Blueprint('admin', __name__)
 def index():
     print("Found admins page")
     order_sql = """
-    SELECT `Order`.id, `Order`.TotalSum, `Order`.Customer, `Order`.ShippingAdress, `Order`.OrderDate, `Order`.ShippingDate, `Order`.ArrivalDate
+    SELECT `Order`.id, `Order`.TotalSum, `Order`.Customer, ShippingAdress.StreetAdress, ShippingAdress.PostCode, ShippingAdress.City, `Order`.OrderDate, `Order`.ShippingDate, `Order`.ArrivalDate
     FROM `Order`
+    CROSS JOIN ShippingAdress ON `Order`.ShippingAdress = ShippingAdress.id
     """ 
-    # Because of how the data has to be structured to be able to displaye it we 
+    # Because of how the data has to be structured to be able to displayed it we 
     # have to split this into two different queries. 
     order_content_sql = """
-    SELECT id, LegoSet.Name, OrderContent.Quantity, (OrderContent.quantity * LegoSet.price)
+    SELECT id, LegoSet.Name, OrderContent.Quantity, TRUNCATE(OrderContent.quantity * LegoSet.price, 2)
     FROM OrderContent
         CROSS JOIN LegoSet ON OrderContent.LegoSet = LegoSet.id
     WHERE 
@@ -34,6 +35,8 @@ def index():
             cursor.execute(order_content_sql, id_dict)
             order_content = cursor.fetchall()
             data.append(order_content)
+            adress = data[3] + "\n" + data[4] + "\n" + data[5]
+            data[3] = adress
             orders[i] = data    # Replace the old set with the modified list instead
 
     return render_template("admin.html", orders=orders)
