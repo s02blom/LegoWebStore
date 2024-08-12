@@ -47,14 +47,14 @@
                                 <th>Quantity</th>
                                 <th>Price</th>
                             </tr>
-                            <tr>
-                                {% for set in data[7] %}
+                            {% for set in data[7] %}
+                                <tr>
                                     <th>{{set[0]}}</th>
                                     <th>{{set[1]}}</th>
                                     <th>{{set[2]}}</th>
                                     <th>{{set[3]}}</th>
-                                {%endfor%}
-                            </tr>
+                                </tr>
+                            {%endfor%}
                         </table>
                     </td>
                 </tr>
