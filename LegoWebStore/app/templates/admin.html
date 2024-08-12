@@ -35,10 +35,10 @@
                     <td>{{data[0]}}</td>
                     <td>{{data[1]}}</td>
                     <td>{{data[2]}}</td>
-                    <td>{{data[3]}}</td>
-                    <td>{{data[4]}}</td>
-                    <td>{{data[5]}}</td>
+                    <td>{{data[3]}}</td>    <!-- Skip the Postcode and city rows-->
                     <td>{{data[6]}}</td>
+                    <td>{{data[7]}}</td>
+                    <td>{{data[8]}}</td>
                     <td>
                         <table border="2">
                             <tr>
@@ -47,7 +47,7 @@
                                 <th>Quantity</th>
                                 <th>Price</th>
                             </tr>
-                            {% for set in data[7] %}
+                            {% for set in data[9] %}
                                 <tr>
                                     <th>{{set[0]}}</th>
                                     <th>{{set[1]}}</th>
