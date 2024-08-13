@@ -19,8 +19,6 @@ def index():
         CROSS JOIN LegoSet ON OrderContent.LegoSet = LegoSet.id
     WHERE 
         `Order` = %(id)s
-    GROUP BY 
-        LegoSet.id
     """
 
     customers_sql = "SELECT * FROM Customer"
