@@ -105,7 +105,24 @@
     </div>
 
     <h2>Lego Set Content</h2>
-    <div class="box"></div>
+    <div class="sql", style="overflow-y: auto;">
+        <table>
+            <tr>
+                <th>Lego Set id</th>
+                <th>Lego Set Name</th>
+                <th>Lego Brick id</th>
+                <th>Quantity</th>
+            </tr>
+            {% for row in lego_set_content%}
+                <tr>
+                    <td>{{row[0]}}</td>
+                    <td>{{row[1]}}</td>
+                    <td>{{row[2]}}</td>
+                    <td>{{row[3]}}</td>
+                </tr>
+            {%endfor%}
+        </table>
+    </div>
 
     <hr>
 

@@ -25,6 +25,11 @@ def index():
 
     customers_sql = "SELECT * FROM Customer"
     lego_bricks_sql = "SELECT * FROM LegoBrick"
+    lego_set_content_sql = """
+    SELECT LegoSet, LegoSet.Name, LegoBrick, Quantity 
+    FROM LegoSetContent
+        CROSS JOIN LegoSet ON LegoSet = LegoSet.id
+    """
 
     connection = db.get_connection()
     with connection.cursor() as cursor:
@@ -45,5 +50,7 @@ def index():
         customers = cursor.fetchall()
         cursor.execute(lego_bricks_sql)
         lego_bricks = cursor.fetchall()
+        cursor.execute(lego_set_content_sql)
+        lego_set_content = cursor.fetchall()
 
-    return render_template("admin.html", orders=orders, customers=customers, lego_bricks=lego_bricks)
+    return render_template("admin.html", orders=orders, customers=customers, lego_bricks=lego_bricks, lego_set_content=lego_set_content)
