@@ -5,11 +5,8 @@
 <nav>
     <h1>Lego Web Store - {%block location%}{%endblock%}</h1>
     <ul>
-        {% if g.user%}
-            <li><span>{{ g.user['username']}}</span>
-        {% else%}
-            <li><a href="{{ url_for('frontpage.index') }}">Log In</a>
-        {%endif%}
+        <li><a href="{{ url_for('frontpage.index') }}">Front Page</a></li>
+        <li><a href="{{ url_for('order.order')}}">Order Page</a></li>
     </ul>
 </nav>
 

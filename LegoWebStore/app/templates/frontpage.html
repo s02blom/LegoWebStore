@@ -52,8 +52,62 @@
         </div>
     </div>
 
-    <h2>Order Lego Pieces</h2>
+    <h2>Order Lego Sets</h2>
     <div class="box">
-        <p>Make form here!</p>
+        <form method="POST", action="">
+        <!-- See for dynamic forms https://sagarkaurav.hashnode.dev/flask-wtf-forms-dynamic-fields-using-javascript -->
+            <h3>Company details</h3>
+            {{form.csrf_token}}
+            {{form.company_name.label}} {{form.company_name()}}<br>
+            {{form.company_country.label}} {{form.company_country()}}<br>
+            {{form.email.label}} {{form.email()}}<br>
+            <h3>Shipping adress</h3>
+            {{form.street_adress.label}} {{form.street_adress()}}<br>
+            {{form.post_code.label}} {{form.post_code()}}<br>
+            {{form.city.label}} {{form.city()}} <br>
+            {{form.shipping_country.label}} {{form.shipping_country()}}<br>
+            <h3>Order</h3>
+            {{form.lego_id()}} {{form.lego_quantity()}}
+            <button type="submit">Complete purchase</button>
+            <button id="add-lego-set-field" type="button">Add more Lego sets</button>
+        </form>
     </div>
+
+
+<script>
+    window.onload = function() {
+        //console.log("Loaded window")
+        let addLegoSetFieldButton = document.getElementById('add-lego-set-field');
+        addLegoSetFieldButton.addEventListener('click', function(e){
+            e.preventDefault();
+            //Print to console
+            //console.log("Clicked button!")
+            let allLegoSetsFieldWrapper = document.getElementById('lego_quantity');
+            let allLegoSetsField = allLegoSetsFieldWrapper.getElementsByTagName('input');
+            if (allLegoSetsField > 99)
+            {
+                alert("You can only order 100 Lego set's at a time");
+                return;
+            }
+            let legoSetsInputId = []
+            for (let i = 0; i < allLegoSetsField.length; i++)
+            {
+                legoSetsInputId.push(parseInt(allLegoSetsField[i].name.split("-")[1]));
+            }
+            let newFieldNameId = `lego_id-${Math.max(...legoSetsInputId) + 1}`;
+            let newFieldNameQuantity = `lego_quantity-${Math.max(...legoSetsInputId) + 1}`;
+            allLegoSetsFieldWrapper.insertAdjacentHTML("beforeend",`
+            <br>
+            <li>
+                <lable for="${newFieldNameId}">Lego set id ${Math.max(...legoSetsInputId) + 2}</lable> 
+                <input id="${newFieldNameId}" name="${newFieldNameId}" type="number", value="">
+            </li>
+            <li>
+                <lable for="${newFieldNameQuantity}">Quantity ${Math.max(...legoSetsInputId) + 2}</lable> 
+                <input id="${newFieldNameQuantity}" name="${newFieldNameQuantity}" type="number", value="">
+            </li>
+            `);
+        });
+    }
+</script>
 {%endblock%}
