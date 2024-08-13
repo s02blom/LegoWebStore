@@ -15,7 +15,24 @@
     <div class="box"></div>
 
     <h2>Customers</h2>
-    <div class="box"></div>
+    <div class="sql", style="overflow-y: auto;">
+        <table>
+            <tr>
+                <th>Id</th>
+                <th>Company name</th>
+                <th>Country</th>
+                <th>Email</th>
+            </tr>
+            {% for customer in customers%}
+                <tr>
+                    <td>{{customer[0]}}</td>
+                    <td>{{customer[1]}}</td>
+                    <td>{{customer[2]}}</td>
+                    <td>{{customer[3]}}</td>
+                </tr>
+            {%endfor%}
+        </table>
+    </div>
 
     <h2>Orders</h2>
     <div class="sql", style="overflow-y:auto;">

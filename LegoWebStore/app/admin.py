@@ -23,6 +23,8 @@ def index():
         LegoSet.id
     """
 
+    customers_sql = "SELECT * FROM Customer"
+
     connection = db.get_connection()
     with connection.cursor() as cursor:
         cursor.execute(order_sql)
@@ -38,5 +40,7 @@ def index():
             adress = data[3] + "\n" + data[4] + "\n" + data[5]
             data[3] = adress
             orders[i] = data    # Replace the old set with the modified list instead
+        cursor.execute(customers_sql)
+        customers = cursor.fetchall()
 
-    return render_template("admin.html", orders=orders)
+    return render_template("admin.html", orders=orders, customers=customers)
