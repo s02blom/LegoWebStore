@@ -24,6 +24,7 @@ def index():
     """
 
     customers_sql = "SELECT * FROM Customer"
+    lego_bricks_sql = "SELECT * FROM LegoBrick"
 
     connection = db.get_connection()
     with connection.cursor() as cursor:
@@ -42,5 +43,7 @@ def index():
             orders[i] = data    # Replace the old set with the modified list instead
         cursor.execute(customers_sql)
         customers = cursor.fetchall()
+        cursor.execute(lego_bricks_sql)
+        lego_bricks = cursor.fetchall()
 
-    return render_template("admin.html", orders=orders, customers=customers)
+    return render_template("admin.html", orders=orders, customers=customers, lego_bricks=lego_bricks)

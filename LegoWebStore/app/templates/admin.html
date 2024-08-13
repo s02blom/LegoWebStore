@@ -80,8 +80,29 @@
     </div>      
     <!-- <div class="box"></div> -->
 
-    <h2>Lego Pieces</h2>
-    <div class="box"></div>
+    <h2>Lego Bricks</h2>
+    <div class="sql", style="overflow-y: auto;">
+        <table>
+            <tr>
+                <th>Id</th>
+                <th>X</th>
+                <th>Y</th>
+                <th>Z</th>
+                <th>Colour (hex)</th>
+                <th>Storage Location</th>
+            </tr>
+            {% for brick in lego_bricks%}
+                <tr>
+                    <td>{{brick[0]}}</td>
+                    <td>{{brick[1]}}</td>
+                    <td>{{brick[2]}}</td>
+                    <td>{{brick[3]}}</td>
+                    <td>{{brick[4]}}</td> <!--Colour, do something fun?-->
+                    <td>{{brick[5]}}</td>
+                </tr>
+            {%endfor%}
+        </table>
+    </div>
 
     <h2>Lego Set Content</h2>
     <div class="box"></div>
@@ -91,7 +112,7 @@
     <h2>Add New Lego Set</h2>
     <div class="box"></div>
 
-    <h2>Add Lego Pieces</h2>
+    <h2>Add Lego Bricks</h2>
     <div class="box"></div>
 
     <h2>Chang Order Content</h2>
