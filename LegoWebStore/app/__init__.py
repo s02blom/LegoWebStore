@@ -29,8 +29,5 @@ def create_app(test_config=None):
     app.register_blueprint(frontpage.blueprint)
     app.add_url_rule('/', endpoint='index')
 
-    from . import orders
-    app.register_blueprint(orders.blueprint)
-
     print("Flask instance created!")
     return app
