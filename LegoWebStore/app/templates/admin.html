@@ -29,7 +29,19 @@
     <hr>
 
     <h2>Add New Lego Set</h2>
-    <div class="box"></div>
+    <div class="box">
+        <form method="POST", action="">
+            <h3>Lego Set</h3>
+            {{lego_set_form.csrf_token}}
+            {{lego_set_form.name.label}} {{lego_set_form.name()}} <br>
+            {{lego_set_form.price.label}} {{lego_set_form.price()}} <br>
+            
+            <h3>Lego Set Content</h3>
+            {{lego_set_form.lego_bricks_id.label}} {{lego_set_form.lego_bricks_id()}} <br>
+            {{lego_set_form.lego_bricks_quantity.label}} {{lego_set_form.lego_bricks_quantity()}} <br>
+            <button type="submit">Add new Lego Set</button>
+        </form>
+    </div>
 
     <h2>Add Lego Pieces</h2>
     <div class="box"></div>
