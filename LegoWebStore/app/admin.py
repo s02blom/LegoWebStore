@@ -42,5 +42,5 @@ class New_Lego_Set(FlaskForm):
     name = StringField("Lego Set Name", validators=[DataRequired()])
     price = IntegerField("Price", validators=[DataRequired()])
 
-    lego_bricks_id = IntegerField("Lego brick id", validators=[DataRequired()])
-    lego_bricks_quantity = IntegerField("Lego brick quantity", validators=[DataRequired()])
+    lego_bricks_id = FieldList(IntegerField("Lego brick id", validators=[DataRequired()]), min_entries=1, max_entries=100)
+    lego_bricks_quantity = FieldList(IntegerField("Lego brick quantity", validators=[DataRequired()]), min_entries=1, max_entries=100)

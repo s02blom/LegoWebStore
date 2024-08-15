@@ -37,9 +37,10 @@
             {{lego_set_form.price.label}} {{lego_set_form.price()}} <br>
             
             <h3>Lego Set Content</h3>
-            {{lego_set_form.lego_bricks_id.label}} {{lego_set_form.lego_bricks_id()}} <br>
-            {{lego_set_form.lego_bricks_quantity.label}} {{lego_set_form.lego_bricks_quantity()}} <br>
+            {{lego_set_form.lego_bricks_id()}}
+            {{lego_set_form.lego_bricks_quantity()}}
             <button type="submit">Add new Lego Set</button>
+            <button id="add-lego-bricks-field" type="button">Add more Lego Bricks</button>
         </form>
     </div>
 
@@ -48,4 +49,41 @@
 
     <h2>Chang Order Content</h2>
     <div class="box"></div>
+
+<script>
+    window.onload = function() {
+        //console.log("Loaded window")
+        let addLegoSetFieldButton = document.getElementById('add-lego-bricks-field');
+        addLegoSetFieldButton.addEventListener('click', function(e){
+            e.preventDefault();
+            //Print to console
+            //console.log("Clicked button!")
+            let allLegoSetsFieldWrapper = document.getElementById('lego_bricks_quantity');
+            let allLegoSetsField = allLegoSetsFieldWrapper.getElementsByTagName('input');
+            if (allLegoSetsField > 99)
+            {
+                alert("You can only order 100 Lego set's at a time");
+                return;
+            }
+            let legoSetsInputId = []
+            for (let i = 0; i < allLegoSetsField.length; i++)
+            {
+                legoSetsInputId.push(parseInt(allLegoSetsField[i].name.split("-")[1]));
+            }
+            let newFieldNameId = `lego_bricks_id-${Math.max(...legoSetsInputId) + 1}`;
+            let newFieldNameQuantity = `lego_bricks_quantity-${Math.max(...legoSetsInputId) + 1}`;
+            allLegoSetsFieldWrapper.insertAdjacentHTML("beforeend",`
+            <br>
+            <li>
+                <lable for="${newFieldNameId}">Lego brick id ${Math.max(...legoSetsInputId) + 2}</lable> 
+                <input id="${newFieldNameId}" name="${newFieldNameId}" type="number", value="">
+            </li>
+            <li>
+                <lable for="${newFieldNameQuantity}">Lego brick quantity ${Math.max(...legoSetsInputId) + 2}</lable> 
+                <input id="${newFieldNameQuantity}" name="${newFieldNameQuantity}" type="number", value="">
+            </li>
+            `);
+        });
+    }
+</script>
 {%endblock%}
