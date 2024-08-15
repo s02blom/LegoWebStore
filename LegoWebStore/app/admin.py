@@ -3,6 +3,7 @@ from . import db
 from flask_wtf import FlaskForm
 from wtforms import StringField, FieldList, IntegerField
 from wtforms.validators import DataRequired
+import mysql.connector
 
 blueprint = Blueprint('admin', __name__)
 
@@ -25,17 +26,23 @@ def index():
         (%(lego_set)s, %(lego_brick)s, %(quantity)s)
         """
         with connection.cursor() as cursor:
-            cursor.execute(lego_set_sql, new_lego_set_data)
-            cursor.fetchall()
-            lego_set_id = cursor.lastrowid
-            for i in range(len(new_lego_set.lego_bricks_id)):
-                lego_set_content_data = {
-                    "lego_set": lego_set_id,
-                    "lego_brick": new_lego_set.lego_bricks_id[i].data,
-                    "quantity": new_lego_set.lego_bricks_quantity[i].data
-                }
-                cursor.execute(lego_set_content_sql, lego_set_content_data)
+            try: 
+                cursor.execute(lego_set_sql, new_lego_set_data)
                 cursor.fetchall()
+                lego_set_id = cursor.lastrowid
+                for i in range(len(new_lego_set.lego_bricks_id)):
+                    lego_set_content_data = {
+                        "lego_set": lego_set_id,
+                        "lego_brick": new_lego_set.lego_bricks_id[i].data,
+                        "quantity": new_lego_set.lego_bricks_quantity[i].data
+                    }
+                    cursor.execute(lego_set_content_sql, lego_set_content_data)
+                    cursor.fetchall()
+            except mysql.connector.Error as err:
+                print(f"Unabme to complete request\n Error: {err}")
+                connection.rollback()
+            connection.commit()
+            
     return render_template("admin.html", lego_set_form=new_lego_set)
 
 class New_Lego_Set(FlaskForm):
