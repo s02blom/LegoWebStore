@@ -12,6 +12,7 @@ def index():
     print("Found admins page")
     connection = db.get_connection()
     new_lego_set = New_Lego_Set()
+    new_lego_brick = New_Lego_Brick()
     if new_lego_set.validate_on_submit():
         lego_set_sql = """
         INSERT INTO LegoSet (Name, Price) VALUES
@@ -43,7 +44,28 @@ def index():
                 connection.rollback()
             connection.commit()
             
-    return render_template("admin.html", lego_set_form=new_lego_set)
+    if new_lego_brick.validate_on_submit():
+        lego_brick_sql = """
+        INSERT INTO LegoBrick (Dim_X, Dim_Y, Dim_Z, Colour, StorageLocation) VALUES
+        (%(x)s, %(y)s, %(z)s, %(colour)s, %(storage)s)
+        """
+        lego_brick_data = {
+            "x": new_lego_brick.x.data,
+            "y": new_lego_brick.y.data,
+            "z": new_lego_brick.z.data,
+            "colour": new_lego_brick.colour.data,
+            "storage": new_lego_brick.storage_location.data
+        }
+        with connection.cursor() as cursor:
+            try:
+                cursor.execute(lego_brick_sql, lego_brick_data)
+                cursor.fetchall()
+            except mysql.connector.Error as err:
+                print(f"Unabme to complete request\n Error: {err}")
+                connection.rollback()
+            connection.commit()
+
+    return render_template("admin.html", lego_set_form=new_lego_set, lego_brick_form=new_lego_brick)
 
 class New_Lego_Set(FlaskForm):
     name = StringField("Lego Set Name", validators=[DataRequired()])
@@ -51,3 +73,10 @@ class New_Lego_Set(FlaskForm):
 
     lego_bricks_id = FieldList(IntegerField("Lego brick id", validators=[DataRequired()]), min_entries=1, max_entries=100)
     lego_bricks_quantity = FieldList(IntegerField("Lego brick quantity", validators=[DataRequired()]), min_entries=1, max_entries=100)
+
+class New_Lego_Brick(FlaskForm):
+    x = IntegerField("X dim", validators=[DataRequired()])
+    y = IntegerField("Y dim", validators=[DataRequired()])
+    z = IntegerField("Z dim", validators=[DataRequired()])
+    colour = StringField("Hex colour")
+    storage_location = IntegerField("Storage id", validators=[DataRequired()])

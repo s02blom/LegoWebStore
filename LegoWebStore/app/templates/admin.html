@@ -44,10 +44,22 @@
         </form>
     </div>
 
-    <h2>Add Lego Pieces</h2>
-    <div class="box"></div>
+    <h2>Add New Lego Pieces</h2>
+    <div class="box">
+        <form method="POST", action="">
+            <h3>Dimentions</h3>
+            {{lego_brick_form.csrf_token}}
+            {{lego_brick_form.x.label}} {{lego_brick_form.x()}} <br>
+            {{lego_brick_form.y.label}} {{lego_brick_form.y()}} <br>
+            {{lego_brick_form.z.label}} {{lego_brick_form.z()}} <br>
+            <h3>Other data</h3>
+            {{lego_brick_form.colour.label}} {{lego_brick_form.colour()}} <br>
+            {{lego_brick_form.storage_location.label}} {{lego_brick_form.storage_location()}} <br>
+            <button type="submit">Add new Lego brick</button>
+        </form>
+    </div>
 
-    <h2>Chang Order Content</h2>
+    <h2>Change Order Content</h2>
     <div class="box"></div>
 
 <script>
