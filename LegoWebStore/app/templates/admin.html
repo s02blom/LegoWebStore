@@ -44,18 +44,14 @@
         </form>
     </div>
 
-    <h2>Add New Lego Pieces</h2>
+    <h2>Add Lego Bricks</h2>
     <div class="box">
         <form method="POST", action="">
-            <h3>Dimentions</h3>
             {{lego_brick_form.csrf_token}}
-            {{lego_brick_form.x.label}} {{lego_brick_form.x()}} <br>
-            {{lego_brick_form.y.label}} {{lego_brick_form.y()}} <br>
-            {{lego_brick_form.z.label}} {{lego_brick_form.z()}} <br>
-            <h3>Other data</h3>
-            {{lego_brick_form.colour.label}} {{lego_brick_form.colour()}} <br>
-            {{lego_brick_form.storage_location.label}} {{lego_brick_form.storage_location()}} <br>
-            <button type="submit">Add new Lego brick</button>
+            {{lego_brick_form.lego_brick_ids()}}
+            {{lego_brick_form.lego_brick_quantity()}}
+            <button type="submit">Update Lego bricks</button>
+            <button id="add-legoBrick-field" type="button">Change more bricks</button>
         </form>
     </div>
 
@@ -84,6 +80,43 @@
             }
             let newFieldNameId = `lego_bricks_id-${Math.max(...legoSetsInputId) + 1}`;
             let newFieldNameQuantity = `lego_bricks_quantity-${Math.max(...legoSetsInputId) + 1}`;
+            allLegoSetsFieldWrapper.insertAdjacentHTML("beforeend",`
+            <br>
+            <li>
+                <lable for="${newFieldNameId}">Lego brick id ${Math.max(...legoSetsInputId) + 2}</lable> 
+                <input id="${newFieldNameId}" name="${newFieldNameId}" type="number", value="">
+            </li>
+            <li>
+                <lable for="${newFieldNameQuantity}">Lego brick quantity ${Math.max(...legoSetsInputId) + 2}</lable> 
+                <input id="${newFieldNameQuantity}" name="${newFieldNameQuantity}" type="number", value="">
+            </li>
+            `);
+        });
+    }
+</script>
+
+<script>
+    window.onload = function() {
+        //console.log("Loaded window")
+        let addLegoSetFieldButton = document.getElementById('add-legoBrick-field');
+        addLegoSetFieldButton.addEventListener('click', function(e){
+            e.preventDefault();
+            //Print to console
+            //console.log("Clicked button!")
+            let allLegoSetsFieldWrapper = document.getElementById('lego_brick_quantity');
+            let allLegoSetsField = allLegoSetsFieldWrapper.getElementsByTagName('input');
+            if (allLegoSetsField > 99)
+            {
+                alert("You can only order 100 Lego set's at a time");
+                return;
+            }
+            let legoSetsInputId = []
+            for (let i = 0; i < allLegoSetsField.length; i++)
+            {
+                legoSetsInputId.push(parseInt(allLegoSetsField[i].name.split("-")[1]));
+            }
+            let newFieldNameId = `lego_brick_ids-${Math.max(...legoSetsInputId) + 1}`;
+            let newFieldNameQuantity = `lego_brick_quantity-${Math.max(...legoSetsInputId) + 1}`;
             allLegoSetsFieldWrapper.insertAdjacentHTML("beforeend",`
             <br>
             <li>

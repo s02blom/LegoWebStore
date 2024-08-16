@@ -46,20 +46,19 @@ def index():
             
     if new_lego_brick.validate_on_submit():
         lego_brick_sql = """
-        INSERT INTO LegoBrick (Dim_X, Dim_Y, Dim_Z, Colour, StorageLocation) VALUES
-        (%(x)s, %(y)s, %(z)s, %(colour)s, %(storage)s)
+        UPDATE StorageLocation 
+        SET Quantity = %(quantity)s
+        WHERE Id = (SELECT StorageLocation FROM LegoBrick WHERE id = %(id)s)
         """
-        lego_brick_data = {
-            "x": new_lego_brick.x.data,
-            "y": new_lego_brick.y.data,
-            "z": new_lego_brick.z.data,
-            "colour": new_lego_brick.colour.data,
-            "storage": new_lego_brick.storage_location.data
-        }
         with connection.cursor() as cursor:
             try:
-                cursor.execute(lego_brick_sql, lego_brick_data)
-                cursor.fetchall()
+                for i in range(len(new_lego_brick.lego_brick_ids)):
+                    lego_brick_data = {
+                        "quantity": new_lego_brick.lego_brick_quantity[i].data,
+                        "id": new_lego_brick.lego_brick_ids[i].data
+                    }
+                    cursor.execute(lego_brick_sql, lego_brick_data)
+                    cursor.fetchall()
             except mysql.connector.Error as err:
                 print(f"Unabme to complete request\n Error: {err}")
                 connection.rollback()
@@ -75,8 +74,6 @@ class New_Lego_Set(FlaskForm):
     lego_bricks_quantity = FieldList(IntegerField("Lego brick quantity", validators=[DataRequired()]), min_entries=1, max_entries=100)
 
 class New_Lego_Brick(FlaskForm):
-    x = IntegerField("X dim", validators=[DataRequired()])
-    y = IntegerField("Y dim", validators=[DataRequired()])
-    z = IntegerField("Z dim", validators=[DataRequired()])
-    colour = StringField("Hex colour")
-    storage_location = IntegerField("Storage id", validators=[DataRequired()])
+    lego_brick_ids = FieldList(IntegerField("Lego Brick id", validators=[DataRequired()]), min_entries=1, max_entries=100)
+    lego_brick_quantity = FieldList(IntegerField("Quantity", validators=[DataRequired()]), min_entries=1, max_entries=100)
+    
