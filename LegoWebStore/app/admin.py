@@ -116,7 +116,9 @@ def index():
         cursor.execute(storage_location_sql)
         storage_location = cursor.fetchall()
 
-    return render_template("admin.html", orders=orders, customers=customers, lego_bricks=lego_bricks, lego_set_content=lego_set_content, storage_location=storage_location)
+    return render_template("admin.html", 
+                           orders=orders, customers=customers, lego_bricks=lego_bricks, lego_set_content=lego_set_content, storage_location=storage_location,
+                           lego_set_form=new_lego_set, lego_brick_form=new_lego_brick)
 
 class New_Lego_Set(FlaskForm):
     name = StringField("Lego Set Name", validators=[DataRequired()])
