@@ -159,8 +159,8 @@
             {{lego_set_form.price.label}} {{lego_set_form.price()}} <br>
             
             <h3>Lego Set Content</h3>
-            {{lego_set_form.lego_bricks_id()}}
-            {{lego_set_form.lego_bricks_quantity()}}
+            {{lego_set_form.lego_set_content_id()}}
+            {{lego_set_form.lego_set_content_quantity()}}
             <button type="submit">Add new Lego Set</button>
             <button id="add-lego-bricks-field" type="button">Add more Lego Bricks</button>
         </form>
@@ -185,7 +185,7 @@
             e.preventDefault();
             //Print to console
             //console.log("Clicked button!")
-            let allLegoSetsFieldWrapper = document.getElementById('lego_bricks_quantity');
+            let allLegoSetsFieldWrapper = document.getElementById('lego_set_content_quantity');
             let allLegoSetsField = allLegoSetsFieldWrapper.getElementsByTagName('input');
             if (allLegoSetsField > 99)
             {
@@ -197,8 +197,8 @@
             {
                 legoSetsInputId.push(parseInt(allLegoSetsField[i].name.split("-")[1]));
             }
-            let newFieldNameId = `lego_bricks_id-${Math.max(...legoSetsInputId) + 1}`;
-            let newFieldNameQuantity = `lego_bricks_quantity-${Math.max(...legoSetsInputId) + 1}`;
+            let newFieldNameId = `lego_set_content_id-${Math.max(...legoSetsInputId) + 1}`;
+            let newFieldNameQuantity = `lego_set_content_quantity-${Math.max(...legoSetsInputId) + 1}`;
             allLegoSetsFieldWrapper.insertAdjacentHTML("beforeend",`
             <br>
             <li>
@@ -211,13 +211,7 @@
             </li>
             `);
         });
-    }
-</script>
-
-<script>
-    window.onload = function() {
-        //console.log("Loaded window")
-        let addLegoSetFieldButton = document.getElementById('add-legoBrick-field');
+        addLegoSetFieldButton = document.getElementById('add-legoBrick-field');
         addLegoSetFieldButton.addEventListener('click', function(e){
             e.preventDefault();
             //Print to console

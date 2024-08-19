@@ -124,8 +124,8 @@ class New_Lego_Set(FlaskForm):
     name = StringField("Lego Set Name", validators=[DataRequired()])
     price = IntegerField("Price", validators=[DataRequired()])
 
-    lego_bricks_id = FieldList(IntegerField("Lego brick id", validators=[DataRequired()]), min_entries=1, max_entries=100)
-    lego_bricks_quantity = FieldList(IntegerField("Lego brick quantity", validators=[DataRequired()]), min_entries=1, max_entries=100)
+    lego_set_content_id = FieldList(IntegerField("Lego brick id", validators=[DataRequired()]), min_entries=1, max_entries=100)
+    lego_set_content_quantity = FieldList(IntegerField("Lego brick quantity", validators=[DataRequired()]), min_entries=1, max_entries=100)
 
 class New_Lego_Brick(FlaskForm):
     lego_brick_ids = FieldList(IntegerField("Lego Brick id", validators=[DataRequired()]), min_entries=1, max_entries=100)
