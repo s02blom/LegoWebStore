@@ -124,6 +124,28 @@
         </table>
     </div>
 
+    <h2>Storage Locations</h2>
+    <div class="sql", style="overflow-y: auto;">
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Quantity</th>
+                <th>House</th>
+                <th>Section</th>
+                <th>Drawer</th>
+            </tr>
+            {% for drawer in storage_location%}
+                <tr>
+                    <td>{{drawer[0]}}</td>
+                    <td>{{drawer[1]}}</td>
+                    <td>{{drawer[2]}}</td>
+                    <td>{{drawer[3]}}</td>
+                    <td>{{drawer[4]}}</td>
+                </tr>
+            {%endfor%}
+        </table>
+    </div>
+
     <hr>
 
     <h2>Add New Lego Set</h2>

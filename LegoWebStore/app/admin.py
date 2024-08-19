@@ -28,6 +28,7 @@ def index():
     FROM LegoSetContent
         CROSS JOIN LegoSet ON LegoSet = LegoSet.id
     """
+    storage_location_sql = "SELECT * FROM StorageLocation"
 
     connection = db.get_connection()
     with connection.cursor() as cursor:
@@ -50,5 +51,7 @@ def index():
         lego_bricks = cursor.fetchall()
         cursor.execute(lego_set_content_sql)
         lego_set_content = cursor.fetchall()
+        cursor.execute(storage_location_sql)
+        storage_location = cursor.fetchall()
 
-    return render_template("admin.html", orders=orders, customers=customers, lego_bricks=lego_bricks, lego_set_content=lego_set_content)
+    return render_template("admin.html", orders=orders, customers=customers, lego_bricks=lego_bricks, lego_set_content=lego_set_content, storage_location=storage_location)
