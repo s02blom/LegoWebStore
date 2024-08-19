@@ -22,7 +22,11 @@ def index():
     """
 
     customers_sql = "SELECT * FROM Customer"
-    lego_bricks_sql = "SELECT * FROM LegoBrick"
+    lego_bricks_sql = """
+    SELECT LegoBrick.Id, Dim_x, Dim_Y, Dim_Z, Colour, StorageLocation.Quantity, StorageLocation
+    FROM LegoBrick
+    CROSS JOIN StorageLocation ON StorageLocation = StorageLocation.id
+    """
     lego_set_content_sql = """
     SELECT LegoSet, LegoSet.Name, LegoBrick, Quantity 
     FROM LegoSetContent

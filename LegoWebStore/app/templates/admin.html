@@ -89,6 +89,7 @@
                 <th>Y</th>
                 <th>Z</th>
                 <th>Colour (hex)</th>
+                <th>Quantity</th>
                 <th>Storage Location</th>
             </tr>
             {% for brick in lego_bricks%}
@@ -99,6 +100,7 @@
                     <td>{{brick[3]}}</td>
                     <td>{{brick[4]}}</td> <!--Colour, do something fun?-->
                     <td>{{brick[5]}}</td>
+                    <td>{{brick[6]}}</td>
                 </tr>
             {%endfor%}
         </table>
