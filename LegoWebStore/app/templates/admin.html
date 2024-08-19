@@ -151,11 +151,97 @@
     <hr>
 
     <h2>Add New Lego Set</h2>
-    <div class="box"></div>
+    <div class="box">
+        <form method="POST", action="">
+            <h3>Lego Set</h3>
+            {{lego_set_form.csrf_token}}
+            {{lego_set_form.name.label}} {{lego_set_form.name()}} <br>
+            {{lego_set_form.price.label}} {{lego_set_form.price()}} <br>
+            
+            <h3>Lego Set Content</h3>
+            {{lego_set_form.lego_set_content_id()}}
+            {{lego_set_form.lego_set_content_quantity()}}
+            <button type="submit">Add new Lego Set</button>
+            <button id="add-lego-bricks-field" type="button">Add more Lego Bricks</button>
+        </form>
+    </div>
 
     <h2>Add Lego Bricks</h2>
-    <div class="box"></div>
+    <div class="box">
+        <form method="POST", action="">
+            {{lego_brick_form.csrf_token}}
+            {{lego_brick_form.lego_brick_ids()}}
+            {{lego_brick_form.lego_brick_quantity()}}
+            <button type="submit">Update Lego bricks</button>
+            <button id="add-legoBrick-field" type="button">Change more bricks</button>
+        </form>
+    </div>
 
-    <h2>Chang Order Content</h2>
-    <div class="box"></div>
+<script>
+    window.onload = function() {
+        //console.log("Loaded window")
+        let addLegoSetFieldButton = document.getElementById('add-lego-bricks-field');
+        addLegoSetFieldButton.addEventListener('click', function(e){
+            e.preventDefault();
+            //Print to console
+            //console.log("Clicked button!")
+            let allLegoSetsFieldWrapper = document.getElementById('lego_set_content_quantity');
+            let allLegoSetsField = allLegoSetsFieldWrapper.getElementsByTagName('input');
+            if (allLegoSetsField > 99)
+            {
+                alert("You can only order 100 Lego set's at a time");
+                return;
+            }
+            let legoSetsInputId = []
+            for (let i = 0; i < allLegoSetsField.length; i++)
+            {
+                legoSetsInputId.push(parseInt(allLegoSetsField[i].name.split("-")[1]));
+            }
+            let newFieldNameId = `lego_set_content_id-${Math.max(...legoSetsInputId) + 1}`;
+            let newFieldNameQuantity = `lego_set_content_quantity-${Math.max(...legoSetsInputId) + 1}`;
+            allLegoSetsFieldWrapper.insertAdjacentHTML("beforeend",`
+            <br>
+            <li>
+                <lable for="${newFieldNameId}">Lego brick id ${Math.max(...legoSetsInputId) + 2}</lable> 
+                <input id="${newFieldNameId}" name="${newFieldNameId}" type="number", value="">
+            </li>
+            <li>
+                <lable for="${newFieldNameQuantity}">Lego brick quantity ${Math.max(...legoSetsInputId) + 2}</lable> 
+                <input id="${newFieldNameQuantity}" name="${newFieldNameQuantity}" type="number", value="">
+            </li>
+            `);
+        });
+        addLegoSetFieldButton = document.getElementById('add-legoBrick-field');
+        addLegoSetFieldButton.addEventListener('click', function(e){
+            e.preventDefault();
+            //Print to console
+            //console.log("Clicked button!")
+            let allLegoSetsFieldWrapper = document.getElementById('lego_brick_quantity');
+            let allLegoSetsField = allLegoSetsFieldWrapper.getElementsByTagName('input');
+            if (allLegoSetsField > 99)
+            {
+                alert("You can only order 100 Lego set's at a time");
+                return;
+            }
+            let legoSetsInputId = []
+            for (let i = 0; i < allLegoSetsField.length; i++)
+            {
+                legoSetsInputId.push(parseInt(allLegoSetsField[i].name.split("-")[1]));
+            }
+            let newFieldNameId = `lego_brick_ids-${Math.max(...legoSetsInputId) + 1}`;
+            let newFieldNameQuantity = `lego_brick_quantity-${Math.max(...legoSetsInputId) + 1}`;
+            allLegoSetsFieldWrapper.insertAdjacentHTML("beforeend",`
+            <br>
+            <li>
+                <lable for="${newFieldNameId}">Lego brick id ${Math.max(...legoSetsInputId) + 2}</lable> 
+                <input id="${newFieldNameId}" name="${newFieldNameId}" type="number", value="">
+            </li>
+            <li>
+                <lable for="${newFieldNameQuantity}">Lego brick quantity ${Math.max(...legoSetsInputId) + 2}</lable> 
+                <input id="${newFieldNameQuantity}" name="${newFieldNameQuantity}" type="number", value="">
+            </li>
+            `);
+        });
+    }
+</script>
 {%endblock%}
