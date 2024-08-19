@@ -31,11 +31,11 @@ def index():
                 cursor.execute(lego_set_sql, new_lego_set_data)
                 cursor.fetchall()
                 lego_set_id = cursor.lastrowid
-                for i in range(len(new_lego_set.lego_bricks_id)):
+                for i in range(len(new_lego_set.lego_set_content_id)):
                     lego_set_content_data = {
                         "lego_set": lego_set_id,
-                        "lego_brick": new_lego_set.lego_bricks_id[i].data,
-                        "quantity": new_lego_set.lego_bricks_quantity[i].data
+                        "lego_brick": new_lego_set.lego_set_content_id[i].data,
+                        "quantity": new_lego_set.lego_set_content_quantity[i].data
                     }
                     cursor.execute(lego_set_content_sql, lego_set_content_data)
                     cursor.fetchall()
