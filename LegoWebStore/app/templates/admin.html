@@ -15,23 +15,145 @@
     <div class="box"></div>
 
     <h2>Customers</h2>
-    <div class="box"></div>
+    <div class="sql", style="overflow-y: auto;">
+        <table>
+            <tr>
+                <th>Id</th>
+                <th>Company name</th>
+                <th>Country</th>
+                <th>Email</th>
+            </tr>
+            {% for customer in customers%}
+                <tr>
+                    <td>{{customer[0]}}</td>
+                    <td>{{customer[1]}}</td>
+                    <td>{{customer[2]}}</td>
+                    <td>{{customer[3]}}</td>
+                </tr>
+            {%endfor%}
+        </table>
+    </div>
 
     <h2>Orders</h2>
-    <div class="box"></div>
+    <div class="sql", style="overflow-y:auto;">
+        <table>
+            <tr>
+                <th>Id</th>
+                <th>Total Sum</th>
+                <th>Customer ID</th>
+                <th>Shipping Adress</th>
+                <th>Order Date</th>
+                <th>Shipping Date</th>
+                <th>Arrival Date</th>
+                <th>Order Content</th>
+            </tr>
+            {% for data in orders%}
+                <tr>
+                    <td>{{data[0]}}</td>
+                    <td>{{data[1]}}</td>
+                    <td>{{data[2]}}</td>
+                    <td>{{data[3]}}</td>    <!-- Skip the Postcode and city rows-->
+                    <td>{{data[6]}}</td>
+                    <td>{{data[7]}}</td>
+                    <td>{{data[8]}}</td>
+                    <td>
+                        <table border="2">
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                            </tr>
+                            {% for set in data[9] %}
+                                <tr>
+                                    <th>{{set[0]}}</th>
+                                    <th>{{set[1]}}</th>
+                                    <th>{{set[2]}}</th>
+                                    <th>{{set[3]}}</th>
+                                </tr>
+                            {%endfor%}
+                        </table>
+                    </td>
+                </tr>
+            {%endfor%}
+        </table>
+    </div>      
+    <!-- <div class="box"></div> -->
 
-    <h2>Lego Pieces</h2>
-    <div class="box"></div>
+    <h2>Lego Bricks</h2>
+    <div class="sql", style="overflow-y: auto;">
+        <table>
+            <tr>
+                <th>Id</th>
+                <th>X</th>
+                <th>Y</th>
+                <th>Z</th>
+                <th>Colour (hex)</th>
+                <th>Quantity</th>
+                <th>Storage Location</th>
+            </tr>
+            {% for brick in lego_bricks%}
+                <tr>
+                    <td>{{brick[0]}}</td>
+                    <td>{{brick[1]}}</td>
+                    <td>{{brick[2]}}</td>
+                    <td>{{brick[3]}}</td>
+                    <td>{{brick[4]}}</td> <!--Colour, do something fun?-->
+                    <td>{{brick[5]}}</td>
+                    <td>{{brick[6]}}</td>
+                </tr>
+            {%endfor%}
+        </table>
+    </div>
 
     <h2>Lego Set Content</h2>
-    <div class="box"></div>
+    <div class="sql", style="overflow-y: auto;">
+        <table>
+            <tr>
+                <th>Lego Set id</th>
+                <th>Lego Set Name</th>
+                <th>Lego Brick id</th>
+                <th>Quantity</th>
+            </tr>
+            {% for row in lego_set_content%}
+                <tr>
+                    <td>{{row[0]}}</td>
+                    <td>{{row[1]}}</td>
+                    <td>{{row[2]}}</td>
+                    <td>{{row[3]}}</td>
+                </tr>
+            {%endfor%}
+        </table>
+    </div>
+
+    <h2>Storage Locations</h2>
+    <div class="sql", style="overflow-y: auto;">
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Quantity</th>
+                <th>House</th>
+                <th>Section</th>
+                <th>Drawer</th>
+            </tr>
+            {% for drawer in storage_location%}
+                <tr>
+                    <td>{{drawer[0]}}</td>
+                    <td>{{drawer[1]}}</td>
+                    <td>{{drawer[2]}}</td>
+                    <td>{{drawer[3]}}</td>
+                    <td>{{drawer[4]}}</td>
+                </tr>
+            {%endfor%}
+        </table>
+    </div>
 
     <hr>
 
     <h2>Add New Lego Set</h2>
     <div class="box"></div>
 
-    <h2>Add Lego Pieces</h2>
+    <h2>Add Lego Bricks</h2>
     <div class="box"></div>
 
     <h2>Chang Order Content</h2>

@@ -21,7 +21,7 @@ body {
 .sql{
     position: relative;
     width: 85%;
-    max-height: 200px;
+    max-height: 350px;
     /*min-height: 100px;
     max-height: 1000px;*/
     border: 2px solid black;
