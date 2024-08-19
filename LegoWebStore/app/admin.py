@@ -63,8 +63,60 @@ def index():
                 print(f"Unabme to complete request\n Error: {err}")
                 connection.rollback()
             connection.commit()
+    
+    order_sql = """
+    SELECT `Order`.id, `Order`.TotalSum, `Order`.Customer, ShippingAdress.StreetAdress, ShippingAdress.PostCode, ShippingAdress.City, `Order`.OrderDate, `Order`.ShippingDate, `Order`.ArrivalDate
+    FROM `Order`
+    CROSS JOIN ShippingAdress ON `Order`.ShippingAdress = ShippingAdress.id
+    """ 
+    # Because of how the data has to be structured to be able to displayed it we 
+    # have to split this into two different queries. 
+    order_content_sql = """
+    SELECT id, LegoSet.Name, OrderContent.Quantity, TRUNCATE(OrderContent.quantity * LegoSet.price, 2)
+    FROM OrderContent
+        CROSS JOIN LegoSet ON OrderContent.LegoSet = LegoSet.id
+    WHERE 
+        `Order` = %(id)s
+    """
 
-    return render_template("admin.html", lego_set_form=new_lego_set, lego_brick_form=new_lego_brick)
+    customers_sql = "SELECT * FROM Customer"
+    lego_bricks_sql = """
+    SELECT LegoBrick.Id, Dim_x, Dim_Y, Dim_Z, Colour, StorageLocation.Quantity, StorageLocation
+    FROM LegoBrick
+    CROSS JOIN StorageLocation ON StorageLocation = StorageLocation.id
+    """
+    lego_set_content_sql = """
+    SELECT LegoSet, LegoSet.Name, LegoBrick, Quantity 
+    FROM LegoSetContent
+        CROSS JOIN LegoSet ON LegoSet = LegoSet.id
+    """
+    storage_location_sql = "SELECT * FROM StorageLocation"
+
+    connection = db.get_connection()
+    with connection.cursor() as cursor:
+        cursor.execute(order_sql)
+        orders = cursor.fetchall()
+        for i in range(0, len(orders)):
+            data = list(orders[i])   
+            id_dict = {
+                "id": data[0]
+            }
+            cursor.execute(order_content_sql, id_dict)
+            order_content = cursor.fetchall()
+            data.append(order_content)
+            adress = data[3] + "\n" + data[4] + "\n" + data[5]
+            data[3] = adress
+            orders[i] = data    # Replace the old set with the modified list instead
+        cursor.execute(customers_sql)
+        customers = cursor.fetchall()
+        cursor.execute(lego_bricks_sql)
+        lego_bricks = cursor.fetchall()
+        cursor.execute(lego_set_content_sql)
+        lego_set_content = cursor.fetchall()
+        cursor.execute(storage_location_sql)
+        storage_location = cursor.fetchall()
+
+    return render_template("admin.html", orders=orders, customers=customers, lego_bricks=lego_bricks, lego_set_content=lego_set_content, storage_location=storage_location)
 
 class New_Lego_Set(FlaskForm):
     name = StringField("Lego Set Name", validators=[DataRequired()])
