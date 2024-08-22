@@ -3,11 +3,12 @@ DROP TRIGGER IF EXISTS RemoveLegoBricks;
 CREATE TRIGGER RemoveLegoBricks BEFORE INSERT ON OrderContent
 FOR EACH ROW
 BEGIN
-    DECLARE done INT DEFAULT FALSE;
-    DECLARE cursorSetContent FOR SELECT * FROM LegoSetContent WHERE LegoSet = New.LegoSet;
-    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
     DECLARE storageID, brickQuantity INT;
     DECLARE lSet, lBrick, lQuant INT;
+    DECLARE done INT DEFAULT FALSE;
+    DECLARE cursorSetContent CURSOR FOR SELECT * FROM LegoSetContent WHERE LegoSet = New.LegoSet;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+    
 
     OPEN cursorSetContent;
 
