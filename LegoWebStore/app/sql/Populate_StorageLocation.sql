@@ -1,8 +1,8 @@
 INSERT INTO StorageLocation (Quantity, House, Section, Drawer) values
 (1500, 'A', 'OD', 42),
 (1500, 'D', 'KJ', 11),
-(1500, 'A', 'KA', 1),
-(1500, 'F', 'AA', 6),
+(200000, 'A', 'KA', 1),
+(1700, 'F', 'AA', 6),
 (1500, 'B', 'GF', 7),
 (1500, 'C','TC', 8),
 (1500, 'F', 'SD', 17),
