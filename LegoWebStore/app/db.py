@@ -94,8 +94,6 @@ def add_triggers():
                      "RemoveLegoBricks.sql"]
     for file in trigger_files:
         db = get_connection()
-        print(f"File: {file}")
-        print(f"DB mem location: {db}")
         with db.cursor() as cursor:
             with current_app.open_resource("sql/"+file, "r") as f:
                 content = f.read()
