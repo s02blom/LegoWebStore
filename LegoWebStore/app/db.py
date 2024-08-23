@@ -102,7 +102,7 @@ def add_triggers():
 
 def add_functions():
     db = get_connection()
-    function_files = ["Check_Avilability.sql"]
+    function_files = ["Check_Availability.sql"]
     with db.cursor() as cursor:
         for file in function_files:
             with current_app.open_resource("sql/"+file, "r") as f:
