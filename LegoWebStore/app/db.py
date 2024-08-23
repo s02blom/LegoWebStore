@@ -101,6 +101,17 @@ def add_triggers():
                 cursor.fetchall()
         close_connection(db)
 
+def add_functions():
+    db = get_connection()
+    function_files = ["Check_Availability.sql"]
+    with db.cursor() as cursor:
+        for file in function_files:
+            with current_app.open_resource("sql/"+file, "r") as f:
+                content = f.read()
+                cursor.execute(content, multi=True)
+                cursor.fetchall()
+    close_connection(db)
+
 @click.command("init_db")
 def init_db_command(): 
     
@@ -112,4 +123,8 @@ def init_db_command():
     set_log_bin_trust_function_creators(0)
     click.echo("Populating tables...")
     populate_tables()
+    click.echo("Creating procedures...")
+    set_log_bin_trust_function_creators(1)
+    add_functions()
+    set_log_bin_trust_function_creators(0)
     click.echo("Done!")

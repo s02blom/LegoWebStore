@@ -116,8 +116,16 @@ def index():
         cursor.execute(storage_location_sql)
         storage_location = cursor.fetchall()
 
+    with connection.cursor() as cursor:
+        """Get things from server"""
+        cursor.execute("SELECT * from LegoSet WHERE CheckAvilability(LegoSet.id) = True;")
+        avilable_sets = cursor.fetchall()
+
+        cursor.execute("SELECT * from LegoSet WHERE CheckAvilability(LegoSet.id) = False;")
+        unavilable_sets = cursor.fetchall()
+
     return render_template("admin.html", 
-                           orders=orders, customers=customers, lego_bricks=lego_bricks, lego_set_content=lego_set_content, storage_location=storage_location,
+                           orders=orders, customers=customers, lego_bricks=lego_bricks, lego_set_content=lego_set_content, storage_location=storage_location, avilable_sets=avilable_sets, unavilable_sets=unavilable_sets, 
                            lego_set_form=new_lego_set, lego_brick_form=new_lego_brick)
 
 class New_Lego_Set(FlaskForm):
