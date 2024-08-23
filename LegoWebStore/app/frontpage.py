@@ -69,13 +69,14 @@ def index():
 
     with connection.cursor() as cursor:
         """Get things from server"""
-        cursor.execute("SELECT * from LegoSet WHERE CheckAvilability(LegoSet.id) = True;")
-        avilable_sets = cursor.fetchall()
+        cursor.execute("SELECT * from LegoSet WHERE CheckAvailability(LegoSet.id) = True;")
+        available_sets = cursor.fetchall()
 
-        cursor.execute("SELECT * from LegoSet WHERE CheckAvilability(LegoSet.id) = False;")
-        unavilable_sets = cursor.fetchall()
+        cursor.execute("SELECT * from LegoSet WHERE CheckAvailability(LegoSet.id) = False;")
+        unavailable_sets = cursor.fetchall()
 
-    return render_template("frontpage.html", avilable_sets=avilable_sets, unavilable_sets=unavilable_sets, form=new_order)
+
+    return render_template("frontpage.html", available_sets=available_sets, unavailable_sets=unavailable_sets, form=new_order)
 
 class NewOrder(FlaskForm):
     company_name = StringField("Company name", validators=[DataRequired()])
