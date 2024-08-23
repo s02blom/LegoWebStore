@@ -100,11 +100,11 @@ def add_triggers():
                 cursor.fetchall()
     close_connection(db)
 
-def add_procedures():
+def add_functions():
     db = get_connection()
-    procedure_files = ["Check_Avilability.sql"]
+    function_files = ["Check_Avilability.sql"]
     with db.cursor() as cursor:
-        for file in procedure_files:
+        for file in function_files:
             with current_app.open_resource("sql/"+file, "r") as f:
                 content = f.read()
                 cursor.execute(content, multi=True)
@@ -123,5 +123,7 @@ def init_db_command():
     click.echo("Populating tables...")
     populate_tables()
     click.echo("Creating procedures...")
-    add_procedures()
+    set_log_bin_trust_function_creators(1)
+    add_functions()
+    set_log_bin_trust_function_creators(0)
     click.echo("Done!")
