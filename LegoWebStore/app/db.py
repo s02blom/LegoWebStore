@@ -102,7 +102,7 @@ def add_triggers():
 
 def add_procedures():
     db = get_connection()
-    procedure_files = ["Check_avilability.sql"]
+    procedure_files = ["Check_Avilability.sql"]
     with db.cursor() as cursor:
         for file in procedure_files:
             with current_app.open_resource("sql/"+file, "r") as f:
