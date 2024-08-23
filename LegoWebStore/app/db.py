@@ -90,15 +90,16 @@ def set_log_bin_trust_function_creators(value=True):
     close_connection(db)
 
 def add_triggers():
-    db = get_connection()
-    trigger_files = ["Triggers.sql"]
-    with db.cursor() as cursor:
-        for file in trigger_files:
+    trigger_files = ["SumOrder.sql",
+                     "RemoveLegoBricks.sql"]
+    for file in trigger_files:
+        db = get_connection()
+        with db.cursor() as cursor:
             with current_app.open_resource("sql/"+file, "r") as f:
                 content = f.read()
                 cursor.execute(content, multi=True)
                 cursor.fetchall()
-    close_connection(db)
+        close_connection(db)
 
 @click.command("init_db")
 def init_db_command(): 
