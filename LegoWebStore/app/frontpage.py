@@ -12,7 +12,7 @@ blueprint = Blueprint('frontpage', __name__)
 def index():
     print("Found / and index")
     connection = db.get_connection()
-    unavilable_sets = []
+    unavailable_sets = []
     new_order = NewOrder()
     if new_order.validate_on_submit():
         customer_sql = """
@@ -71,8 +71,9 @@ def index():
     with connection.cursor() as cursor:
         """Get things from server"""
         cursor.execute("SELECT * from LegoSet")
-        avilable_sets = cursor.fetchall()
-    return render_template("frontpage.html", avilable_sets=avilable_sets, unavilable_sets=unavilable_sets, form=new_order)
+        available_sets = cursor.fetchall()
+
+    return render_template("frontpage.html", available_sets=available_sets, unavailable_sets=unavailable_sets, form=new_order)
 
 class NewOrder(FlaskForm):
     company_name = StringField("Company name", validators=[DataRequired()])
