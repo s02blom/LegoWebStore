@@ -12,7 +12,6 @@ blueprint = Blueprint('frontpage', __name__)
 def index():
     print("Found / and index")
     connection = db.get_connection()
-    unavilable_sets = []
     new_order = NewOrder()
     if new_order.validate_on_submit():
         customer_sql = """
@@ -70,8 +69,12 @@ def index():
 
     with connection.cursor() as cursor:
         """Get things from server"""
-        cursor.execute("SELECT * from LegoSet")
+        cursor.execute("SELECT * from LegoSet WHERE CheckAvilability(LegoSet.id) = True;")
         avilable_sets = cursor.fetchall()
+
+        cursor.execute("SELECT * from LegoSet WHERE CheckAvilability(LegoSet.id) = False;")
+        unavilable_sets = cursor.fetchall()
+
     return render_template("frontpage.html", avilable_sets=avilable_sets, unavilable_sets=unavilable_sets, form=new_order)
 
 class NewOrder(FlaskForm):
