@@ -5,9 +5,11 @@ BEGIN
     DECLARE lSet, LBrick, requiredLegoBricks, avilableLegoBricks INT;
     DECLARE done INT DEFAULT FALSE;
     DECLARE cursorSetContent CURSOR FOR SELECT * FROM LegoSetContent WHERE LegoSet = legoSetId;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
 
+    SET avilable = TRUE;
     OPEN cursorSetContent;
-
+    
     LegoBricksLoop: LOOP
         FETCH cursorSetContent into lSet, LBrick, requiredLegoBricks;
         IF done THEN
