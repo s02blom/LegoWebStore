@@ -1,6 +1,6 @@
 DROP PROCEDURE IF EXISTS CheckAvilability;
 
-CREATE PROCEDURE CheckAvilability (IN legoSetId, OUT avilable BOOLEAN)
+CREATE PROCEDURE CheckAvilability (IN legoSetId INT, OUT avilable BOOLEAN)
 BEGIN
     DECLARE lSet, LBrick, requiredLegoBricks, avilableLegoBricks INT;
     DECLARE done INT DEFAULT FALSE;
