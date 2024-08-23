@@ -1,13 +1,14 @@
-DROP PROCEDURE IF EXISTS CheckAvilability;
+DROP FUNCTION IF EXISTS CheckAvailability;
 
-CREATE PROCEDURE CheckAvilability (IN legoSetId INT, OUT avilable BOOLEAN)
+CREATE FUNCTION CheckAvailability (legoSetId INT)
+RETURNS BOOLEAN DETERMINISTIC
 BEGIN
-    DECLARE lSet, LBrick, requiredLegoBricks, avilableLegoBricks INT;
+	DECLARE available BOOLEAN DEFAULT TRUE;
+    DECLARE lSet, LBrick, requiredLegoBricks, availableLegoBricks INT;
     DECLARE done INT DEFAULT FALSE;
     DECLARE cursorSetContent CURSOR FOR SELECT * FROM LegoSetContent WHERE LegoSet = legoSetId;
     DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
 
-    SET avilable = TRUE;
     OPEN cursorSetContent;
     
     LegoBricksLoop: LOOP
@@ -16,14 +17,15 @@ BEGIN
             LEAVE LegoBricksLoop;
         END IF;
 
-        SELECT StorageLocation.Quantity INTO avilableLegoBricks
+        SELECT StorageLocation.Quantity INTO availableLegoBricks
             FROM LegoBrick
             CROSS JOIN StorageLocation ON LegoBrick.StorageLocation = StorageLocation.ID
             WHERE LegoBrick.id = LBrick;
-        IF avilableLegoBricks < requiredLegoBricks THEN
-            SET avilable = FALSE;
+        IF availableLegoBricks < requiredLegoBricks THEN
+            SET available = FALSE;
             SET done = True;
         END IF;
     END LOOP;
     CLOSE cursorSetContent;
+    RETURN available;
 END
