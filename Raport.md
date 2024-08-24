@@ -8,7 +8,14 @@ exactly what the different kits require.
 
 ## ER Models
 See figure 1
-![Figure 1](./figures/Lego.png)
+There is several things we can take away from the description of the buissness we are modeling. Firstly is desciption of the Lego Set's and Lego Bricks. Several different Lego Bricks make up the one Lego Set and Lego Brick are themselves never sold. We chose to model the Lego Set and the Lego Bricks as seen in the [ER-diagram](#er---diagram). To more closely model reality we also made the Storage Location table. One noteworthy choice was made here, to store the quantity of Lego Bricks that were avilable in storage in the Storage Location table. 
+
+### ER - diagram
+![Figure 1](./figures/ER-diagram.png)
+
+
+![Figure 2](./figures/Schema.png)
+
 
 ## SQL Queries
 
