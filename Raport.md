@@ -8,12 +8,19 @@ exactly what the different kits require.
 
 ## ER Models
 See figure 1
-There is several things we can take away from the description of the buissness we are modeling. Firstly is desciption of the Lego Set's and Lego Bricks. Several different Lego Bricks make up the one Lego Set and Lego Brick are themselves never sold. We chose to model the Lego Set and the Lego Bricks as seen in the [ER-diagram](#er---diagram). To more closely model reality we also made the Storage Location table. One noteworthy choice was made here, to store the quantity of Lego Bricks that were avilable in storage in the Storage Location table. 
+There is several things we can take away from the description of the buissness we are modeling. 
+
+Firstly is desciption of the Lego Set's and Lego Bricks. Several different Lego Bricks make up the one Lego Set and Lego Brick are themselves never sold. We chose to model the Lego Set and the Lego Bricks as seen in the [ER-diagram](#er---diagram). It is rare that a Lego Set only contains one of a single type of Lego Brick, so to properly model the relationship we need to add a quantity. To more closely model reality we also made the Storage Location table. One noteworthy choice was made here, to store the quantity of Lego Bricks that were avilable in storage in the Storage Location table. It seperates the different tables into two different categories, Lego Brick which deals in hypothetical descriptins of a Lego Brick and Storage Location who has lots of information about the real world such as where it's located and how much is in it. 
+
+Secondly is that we are in fact some kind of business, and there for we need to keep track of what we sell, to whom a where to ship the goods. To that end we need one table to keep track of the orders and another to know who the customer is. In this chase we decide that we were not an end retailer, but rather some middle man, meaning our hypothetical customers were other businesses. The Orders has to contain Lego Sets as that is the only thiing we sell. 
+
+As we can see from the quantifiers in the [ER-diagram](#er---diagram) most of the tables has a many to one or a many to many relation to one another. This means that we will have to create several helping tables to keep track. Detailed in the [Schema](#schema), we can see Lego Set Content and Order content primarily are here to help. This comes with the bonus that we can add the attribute quantity as detailed in the Lego Brick - Lego Set relation and added in the Order - Lego Set relation to better store data and model reality. The somewhat unexpected addition here is the Shipping Adress entity. An address has a lot of different parts to them and are often very different in different countries. If this were a propper business we would have to do a lot of work with the adress to figure out the best shipping routes and times and then it sould be benificial to have it as a seperate data structure. 
 
 ### ER - diagram
 ![Figure 1](./figures/ER-diagram.png)
 
 
+### Schema
 ![Figure 2](./figures/Schema.png)
 
 
