@@ -81,9 +81,11 @@ def index():
 
     customers_sql = "SELECT * FROM Customer"
     lego_bricks_sql = """
-    SELECT LegoBrick.Id, Dim_x, Dim_Y, Dim_Z, Colour, StorageLocation.Quantity, StorageLocation
+    SELECT LegoBrick.Id, Dim_x, Dim_Y, Dim_Z, Colour, StorageLocation.Quantity, StorageLocation, COUNT(LegoSetContent.LegoSet)
     FROM LegoBrick
     CROSS JOIN StorageLocation ON StorageLocation = StorageLocation.id
+    INNER JOIN LegoSetContent ON LegoSetContent.LegoBrick = LegoBrick.id
+    GROUP BY LegoBrick.id
     """
     lego_set_content_sql = """
     SELECT LegoSet, LegoSet.Name, LegoBrick, Quantity 
