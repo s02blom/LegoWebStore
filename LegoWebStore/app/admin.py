@@ -118,10 +118,10 @@ def index():
 
     with connection.cursor() as cursor:
         """Get things from server"""
-        cursor.execute("SELECT * from LegoSet WHERE CheckAvilability(LegoSet.id) = True;")
+        cursor.execute("SELECT * from LegoSet WHERE CheckAvailability(LegoSet.id) = True;")
         avilable_sets = cursor.fetchall()
 
-        cursor.execute("SELECT * from LegoSet WHERE CheckAvilability(LegoSet.id) = False;")
+        cursor.execute("SELECT * from LegoSet WHERE CheckAvailability(LegoSet.id) = False;")
         unavilable_sets = cursor.fetchall()
 
     return render_template("admin.html", 
