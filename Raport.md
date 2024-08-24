@@ -19,6 +19,7 @@ See figure 1
 | Sofia Blom | Setup devcontainer for Python and SQL development | 2024-04-09 |
 | Sofia Blom | First attempt at a ER-diagram for the project | 2024-04-12 |
 | Sofia Blom | Got flask to display an html template | 2024-05-09 |
+| Sofia Blom & Ninni Salomonsson | final version of ER-diagram and Schema | 2004-05-14 |
 | Sofia Blom & Ninni Salomonsson | Created sql files for createing and populating tables | 2024-05-15 |
 | Sofia Blom | Add trigger for totalling the sum in Order table | 2024-07-17 |
 | Sofia Blom | Frontpage form working with database |2024-08-07|
