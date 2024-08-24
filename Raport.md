@@ -161,6 +161,7 @@ END
 | Sofia Blom & Ninni Salomonsson | Function for checking whether we have enought Lego Bricks to make that Lego Set | 2024-08-23 |
 
 ## Other
+There are several things to take note of here. Firstly is that the application has no security what so ever. Secondly is that all the input fields have no limits on the html end meaning that the user could input any number or any length of string and it would be passed on to the python code. This of course means that we can input zero or negative numbers, somewhat breaking things. If we ever are unable to complete a SQL command that contains user given information we print an error in the console and perform a rollback on the transaction. It is still possible to order a negative amount of Lego Sets. This could be interprited as a return order, and it is handeled correctly by the triggers. To ensure that a user is only able to input correctly formated information would involve more html and python and would not contribute towards the functionality of the database. Because of this it was deemed out of scope for this assignment. 
 
 ### Github access
 The repository can be found [here](https://github.com/s02blom/LegoWebStore/). 
