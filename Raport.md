@@ -18,7 +18,17 @@ SELECT `Order`.id, `Order`.TotalSum, `Order`.Customer, ShippingAdress.StreetAdre
 ```
 With this statement we get the Order ID, Total Sum, Customer ID, Shipping Adress, Post Code, City, Order Date, Shipping Date and Arrival Date for every order. Of course it would have been easier to solely display all the data that's available in the `Order` table and nothing else. But then we would be missing some valuble and relavant information for the orders. That's why we also want to get some data from the related `ShippingAdress` table. We want the `StreetAdress`, `PostCode` and the `City` from the `ShippingAdress` table. To correctly align the two tables; `Order` and `ShippingAdress`, we use `CROSS JOIN` on the shipping adress id, which is a value that both tables contains (`Order.ShippingAdress` for the `Order` table, and `ShippingAdress.id` for the `ShippingAdress` table). 
 
-Aside from that select statement above, we also have a query that looks like this, on both the front page and admin page:  
+Further down on the admin page we display all the Lego bricks that our webstore contains. We use this query to achieve that:
+```
+SELECT LegoBrick.Id, Dim_x, Dim_Y, Dim_Z, Colour, StorageLocation.Quantity, StorageLocation, COUNT(LegoSetContent.LegoSet)
+    FROM LegoBrick
+    CROSS JOIN StorageLocation ON StorageLocation = StorageLocation.id
+    INNER JOIN LegoSetContent ON LegoSetContent.LegoBrick = LegoBrick.id
+    GROUP BY LegoBrick.id
+```
+This statement contains the `COUNT` aggregation, which in our case counts the number of different LegoSets that one LegoBrick belongs to. This information can be useful if we for exmaple stop providing a certain Lego brick. Then we can check how many LegoSets that contain this Lego brick. This query uses both a `CROSS JOIN` on `LegoBrick` and `StorageLocation`, and also an `INNER JOIN` with `LegoSetContent` and the combination from the `CROSS JOIN` from above. These joins are necessary to be able to reach the data that we wanted to display.
+
+Aside from that select statements above, we also have a query that looks like this, on both the front page and admin page:  
 ```
 SELECT * from LegoSet WHERE CheckAvailability(LegoSet.id) = True;
 ```
