@@ -32,7 +32,7 @@ Aside from that select statements above, we also have a query that looks like th
 ```
 SELECT * from LegoSet WHERE CheckAvailability(LegoSet.id) = True;
 ```
-This statement is used to displays all the available Lego sets at that moment. We use almost the same query for displaying all the unavailable Lego sets; but instead of `CheckAvailability(LegoSet.id) = True`, the unavailable Lego sets is displayed using `CheckAvailability(LegoSet.id) = False` insted. `CheckAvailability` is a function we created ourselves, because we needed a way to check whether our LegoSets were available for purchase or not.
+This statement is used to displays all the available Lego sets at that moment. We use almost the same query for displaying all the unavailable Lego sets; but instead of `CheckAvailability(LegoSet.id) = True`, the unavailable Lego sets is displayed using `CheckAvailability(LegoSet.id) = False` insted. [CheckAvailability](#checkavailability) is a function we created ourselves, because we needed a way to check whether our LegoSets were available for purchase or not.
 
 ### CheckAvailability
 ```
@@ -106,7 +106,7 @@ BEGIN
     CLOSE cursorSetContent;
 END
 ```
-We have two triggers that activates before we insert data in the OrderContent table. `RemoveLegoBricks` is one of them. This trigger updates the available quantity of each Lego brick that was needed for an order. In other words, removes the quantity of Lego pieces from the storage that an order required. Similar to the `CheckAvailability` function, `RemoveLegoBricks` also uses a cursor to fetch data deeper in our tables, and also a variable `done` that helps us break the loop when we are done.
+We have two triggers that activates before we insert data in the OrderContent table. `RemoveLegoBricks` is one of them. This trigger updates the available quantity of each Lego brick that was needed for an order. In other words, removes the quantity of Lego pieces from the storage that an order required. Similar to the [CheckAvailability](#checkavailability) function, [RemoveLegoBricks](#removelegobricks) also uses a cursor to fetch data deeper in our tables, and also a variable `done` that helps us break the loop when we are done.
 
 In the loop we insert the `StorageLocation`, for the Lego Brick that we are checking right now, into the variable `storageID`. Then we insert the old quantity value, for our specific Lego brick, into the variable `brickQuantity`.
 
